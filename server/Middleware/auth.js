@@ -1,0 +1,89 @@
+const jwt = require("jsonwebtoken");
+const user = require("../Models/User");
+require("dotenv").config();
+
+// Auth
+exports.auth = async (req, res, next) => {
+  try {
+    const token =
+      req.cookies.token ||
+      req.body.token ||
+      req.header("Authorisation").replace("bearer ", "");
+    if (!token) {
+      return res.status(401).json({
+        status: 401,
+        message: "Did not receive token from the request in the middleware",
+      });
+    }
+    try {
+      const decode = jwt.verify(token, process.env.JWT_SECRET);
+      console.log(decode);
+      req.user = decode;
+    } catch (err) {
+      return res.status(401).json({
+        success: false,
+        message: "Token verification  is failed",
+      });
+    }
+    next();
+  } catch (error) {
+    return res.status(401).json({
+      success: false,
+      message: "Something rror occured while validating token",
+    });
+  }
+};
+
+// IsStudent middleware
+exports.IsStudent = async (req, res, next) => {
+  try {
+    if (req.user.accoutType !== "Student") {
+      res.status(401).json({
+        success: false,
+        message: "This is a protected route for students only",
+      });
+    }
+    next();
+  } catch (error) {
+    res.status(401).json({
+      success: false,
+      message: "User role can not verified please try again",
+    });
+  }
+};
+
+// IsInstructor middleware
+exports.IsInstructor = async (req, res, next) => {
+  try {
+    if (req.user.accoutType !== "Instructor") {
+      res.status(401).json({
+        success: false,
+        message: "This is a protected route for Instructor only",
+      });
+    }
+    next();
+  } catch (error) {
+    res.status(401).json({
+      success: false,
+      message: "User role can not verified please try again",
+    });
+  }
+};
+
+// Admin middleware
+exports.IsAdmin = async (req, res, next) => {
+  try {
+    if (req.user.accoutType !== "Admin") {
+      res.status(401).json({
+        success: false,
+        message: "This is a protected route for Admin only",
+      });
+    }
+    next();
+  } catch (error) {
+    res.status(401).json({
+      success: false,
+      message: "User role can not verified please try again",
+    });
+  }
+};
