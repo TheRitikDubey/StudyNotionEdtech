@@ -117,3 +117,23 @@ exports.CreateCourse = async (req, res) => {
     });
   }
 };
+
+exports.getCourse = async (req, res) => {
+  try {
+    const { id } = req.body;
+    const ourCourse = Course.findById(id)
+      .populate("instructorDetails")
+      .exec();
+
+    return res.status(201).json({
+      success: true,
+      message: "Response for your course",
+      data: ourCourse,
+    });
+  } catch (error) {
+    return res.status(501).json({
+      success: false,
+      message: "Error while fetching the course",
+    });
+  }
+};
