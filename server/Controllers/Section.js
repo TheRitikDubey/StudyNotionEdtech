@@ -1,5 +1,5 @@
-const Course = require("../Models/courses");
-const Section = require("../Models/section");
+const Course = require("../Models/Courses");
+const Section = require("../Models/Section");
 
 exports.createSection = async (req,res)=>{
     try {
@@ -23,7 +23,12 @@ exports.createSection = async (req,res)=>{
             },
             {new: true},
             // Here we need to populate the with respect to section and subSection both.
-        )
+        ).populate({
+            path: "courseContent",
+            populate:{
+                path: "subSection",
+            },
+        })
         return res.status(201).json({
             success: true,
             message:"Successfully create your section",

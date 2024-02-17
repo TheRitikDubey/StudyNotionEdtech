@@ -1,5 +1,5 @@
-const SubSection = require("../Models/subSection");
-const Section = require("../Models/section")
+const SubSection = require("../Models/SubSection");
+const Section = require("../Models/Section")
 const { uploadImageInCloudinary } = require("../utils/imageUploader")
 
 exports.createSubSection = async (req, res) => {
@@ -25,8 +25,7 @@ exports.createSubSection = async (req, res) => {
             $push:{
                 subSection: subSectionDetails._id,
             }
-        },{new:true})
-        // HW update populate query to get the data of subssection as well in the response
+        },{new:true}).populate("subSection")
 
         // return response
         return res.status(201).json({

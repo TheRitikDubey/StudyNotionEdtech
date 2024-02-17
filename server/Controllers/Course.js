@@ -1,4 +1,4 @@
-const Course = require("../Models/courses");
+const Course = require("../Models/Courses");
 const User = require("../Models/User");
 const Tag = require("../Models/tags");
 const uploadImageInCloudinary = require("../utils/imageUploader");

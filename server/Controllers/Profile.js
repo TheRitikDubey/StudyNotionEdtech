@@ -1,6 +1,6 @@
-const Profile = require("../Models/profile");
+const Profile = require("../Models/Profile");
 const User = require("../Models/User");
-const courses = require("../Models/courses");
+const courses = require("../Models/Courses");
 
 exports.updateProfile(async (req, res) => {
     try {
@@ -58,7 +58,7 @@ exports.deleteProfile(async (req, res) => {
         // TODO: while testing check are we able to delte the user from course enrolled as well.
         // const courseCountDelete = courses.findOneAndDelete({studentsEnrolled: _id});
 
-        const userProfile = await User.findByIdAndDelete({ _id: userDetails.additionalDetaisl });
+        const userProfile = await Profile.findByIdAndDelete({ _id: userDetails.additionalDetails });
         const deleteUser = await User.findByIdAndDelete(_id);
 
         // return response

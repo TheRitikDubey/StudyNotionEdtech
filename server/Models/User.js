@@ -37,7 +37,7 @@ const userSchema = new mongoose.Schema({
     ennum: ["Admin", "Student", "Instructor"],
     require: true,
   },
-  additionalDetaisl: {
+  additionalDetails: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Profile",
   },
