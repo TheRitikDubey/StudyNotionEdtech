@@ -121,9 +121,7 @@ exports.CreateCourse = async (req, res) => {
 exports.getCourse = async (req, res) => {
   try {
     const { id } = req.body;
-    const ourCourse = Course.findById(id)
-      .populate("instructorDetails")
-      .exec();
+    const ourCourse = Course.findById(id).populate("instructorDetails").exec();
 
     return res.status(201).json({
       success: true,
@@ -134,6 +132,47 @@ exports.getCourse = async (req, res) => {
     return res.status(501).json({
       success: false,
       message: "Error while fetching the course",
+    });
+  }
+};
+
+exports.getCourseDetails = async (req, res) => {
+  try {
+    const { courseId } = req.body;
+
+    const courseDetails = await Course.findById(courseId)
+      .populate({
+        path: "courseContent",
+        populate: {
+          path: "SubSection",
+        },
+      })
+      .populate("RatingReview")
+      .populate({
+        path: "instructor",
+        populate: {
+          path: "additionDetails",
+        },
+      })
+      .populate("Category");
+
+      if(!courseDetails){
+        return res.status(404).json({
+          success: false,
+          message: `Course not found with courseID: ${courseId}`
+        })
+      }
+
+
+      return res.status(200).json({
+        success: true,
+        message: "Sucessfully fetched course details",
+        data: courseDetails
+      })
+  } catch (error) {
+    return res.status(501).json({
+      success: false,
+      message: "Error while fetching course details",
     });
   }
 };
