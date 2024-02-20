@@ -19,7 +19,7 @@ const courseSchema = new mongoose.Schema({
     require: true,
   },
   whatYouWillLearn: {
-    type: Stirng,
+    type: String,
     required: true,
     trim: true,
   },
