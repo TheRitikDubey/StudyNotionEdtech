@@ -88,7 +88,7 @@ exports.updateSubSection = async (req, res) => {
     }
 }
 
-exports.updateSubSection = async (req, res) => {
+exports.deleteSubSection = async (req, res) => {
     try {
         const {subSectionId} = req.body;
         if (!subSectionId) {

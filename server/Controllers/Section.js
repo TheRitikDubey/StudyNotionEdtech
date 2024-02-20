@@ -70,7 +70,7 @@ exports.updateSection = async (req,res)=>{
     }
 }
 
-exports.delteSection = async (req,res)=>{
+exports.deleteSection = async (req,res)=>{
     try {
         // Here we are sending id in params
         const {sectionId} = req.params;
