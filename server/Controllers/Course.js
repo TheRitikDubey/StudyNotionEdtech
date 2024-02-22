@@ -1,7 +1,7 @@
 const Course = require("../Models/Courses");
 const User = require("../Models/User");
-const Tag = require("../Models/Category");
-const uploadImageInCloudinary = require("../utils/imageUploader");
+const Category = require("../Models/Category");
+const { uploadImageInCloudinary } = require("../utils/imageUploader");
 
 exports.getAllCourse = async (req, res) => {
   try {
@@ -33,8 +33,15 @@ exports.getAllCourse = async (req, res) => {
 
 exports.CreateCourse = async (req, res) => {
   try {
-    const { courseName, courseDescription, tag, whatWillYouLearn, price } =
-      req.body;
+    let {
+      courseName,
+      courseDescription,
+      category,
+      status,
+      whatYouWillLearn,
+      price,
+      instructions,
+    } = req.body;
 
     const thumbnail = req.files.thumbnailImage;
 
@@ -42,9 +49,10 @@ exports.CreateCourse = async (req, res) => {
     if (
       !courseName ||
       !courseDescription ||
-      !tag ||
-      !whatWillYouLearn ||
-      !price
+      !category ||
+      !whatYouWillLearn ||
+      !price ||
+      !thumbnail
     ) {
       return res.status(401).json({
         success: false,
@@ -55,8 +63,13 @@ exports.CreateCourse = async (req, res) => {
     // check for instructor
     // TODO instructer ID and the details might not same
     const userId = req.user.id;
-    const instructorDetails = User.findById(userId);
-    console.log("The instructor details", instructorDetails);
+    if (!status || status === undefined) {
+      status = "Draft";
+    }
+
+    const instructorDetails = await User.findById(userId, {
+      accountType: "Instructor",
+    });
 
     if (!instructorDetails) {
       return res.status(404).json({
@@ -65,23 +78,28 @@ exports.CreateCourse = async (req, res) => {
       });
     }
 
-    // check with the given tag
-    const tagDetails = await Tag.findById(tag);
-    if (!tagDetails) {
+    // check with the given category
+    const categoryDetails = await Category.findById(category);
+    if (!categoryDetails) {
       return res.status(401).json({
         success: false,
-        message: "Tag details not found",
+        message: "category details not found",
       });
     }
-    const image = uploadImageInCloudinary(thumbnail, process.env.FOLDER_NAME);
+    const uploadedImage = await uploadImageInCloudinary(
+      thumbnail,
+      process.env.FOLDER_NAME
+    );
     const newCourse = await Course.create({
       courseName,
       courseDescription,
-      courseInstructor: instructorDetails._id,
+      instructor: instructorDetails._id,
       whatYouWillLearn,
       price,
-      tag: tagDetails._id,
-      thumbnail: thumbnailImage.secure_url,
+      category: categoryDetails._id,
+      thumbnail: uploadedImage.secure_url,
+      instructions: instructions,
+      status: status,
     });
 
     // Now add this course to the UserSchema of instructor and student
@@ -94,11 +112,11 @@ exports.CreateCourse = async (req, res) => {
       { new: true }
     );
 
-    // Update the Tag Schema
-    await Tag.findByIdAndUpdate(
-      { tag },
+    // Update the category Schema
+    await Category.findByIdAndUpdate(
+      { _id: category },
       {
-        $push: newCourse,
+        $push: newCourse._id,
       },
       { new: true }
     );
@@ -110,7 +128,7 @@ exports.CreateCourse = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    return res.status(401).json({
+    return res.status(500).json({
       success: false,
       message: "Error while fetching the course",
       data: error.message,
@@ -156,19 +174,18 @@ exports.getCourseDetails = async (req, res) => {
       })
       .populate("Category");
 
-      if(!courseDetails){
-        return res.status(404).json({
-          success: false,
-          message: `Course not found with courseID: ${courseId}`
-        })
-      }
+    if (!courseDetails) {
+      return res.status(404).json({
+        success: false,
+        message: `Course not found with courseID: ${courseId}`,
+      });
+    }
 
-
-      return res.status(200).json({
-        success: true,
-        message: "Sucessfully fetched course details",
-        data: courseDetails
-      })
+    return res.status(200).json({
+      success: true,
+      message: "Sucessfully fetched course details",
+      data: courseDetails,
+    });
   } catch (error) {
     return res.status(501).json({
       success: false,

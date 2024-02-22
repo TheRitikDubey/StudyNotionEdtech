@@ -4,12 +4,12 @@ const User = require("../Models/User");
 exports.updateProfile=(async (req, res) => {
   try {
     // get data
-    const { dateOfBirth = "", about = "", contactNuber, gender } = req.body;
+    const { dateOfBirth = "", about = "", contactNumber, gender } = req.body;
     // get userID
     const _id = req.user.id;
     // validate
-    if (!contactNuber || !gender || !_id) {
-      return res.status(401).json({
+    if (!contactNumber || !gender || !_id) {
+      return res.status(404).json({
         sucess: false,
         message:
           "Unable to get all required feilds in update Profile controler",
@@ -17,11 +17,11 @@ exports.updateProfile=(async (req, res) => {
     }
     // check for profile ID
     const userDetails = await User.findById(_id);
-    const ProfileDetails = await Profile.findById(ProfileId);
+    const ProfileDetails = await Profile.findById(userDetails.additionalDetails);
     // update the profile with values
     ProfileDetails.dateOfBirth = dateOfBirth;
     ProfileDetails.about = about;
-    ProfileDetails.contactNumber = contactNuber;
+    ProfileDetails.contactNumber = contactNumber;
     ProfileDetails.gender = gender;
     // save or update in our DB
     await ProfileDetails.save();
@@ -30,12 +30,14 @@ exports.updateProfile=(async (req, res) => {
     return res.status(201).json({
       sucess: true,
       message: "Sucessfully updated or created the profile",
-      // user: ProfileDetails
+      user: ProfileDetails
     });
   } catch (error) {
+    console.log(error);
     return res.status(401).json({
       sucess: false,
       message: "Unable to create or update the profile",
+      error: error
     });
   }
 });
@@ -82,7 +84,7 @@ exports.getUserDetailsData = (async (req, res) => {
     const id = req.user.id;
 
     const userDetails = await User.findById(id)
-      .populate("additonalDetials")
+      .populate("additionalDetails")
       .exec();
     return res.status(201).json({
       sucess: true,
@@ -90,6 +92,7 @@ exports.getUserDetailsData = (async (req, res) => {
       userData: userDetails,
     });
   } catch (error) {
+    console.log(error);
     return res.status(401).json({
       sucess: false,
       message: "Error while fetching the data",

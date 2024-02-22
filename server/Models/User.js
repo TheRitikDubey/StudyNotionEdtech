@@ -34,7 +34,7 @@ const userSchema = new mongoose.Schema({
   },
   accountType: {
     type: String,
-    ennum: ["Admin", "Student", "Instructor"],
+    enum: ["Admin", "Student", "Instructor"],
     require: true,
   },
   additionalDetails: {
@@ -47,7 +47,7 @@ const userSchema = new mongoose.Schema({
       ref: "Courses",
     },
   ],
-  image:{
+  Image:{
     type: String,
   },
   courseProgress: [

@@ -1,11 +1,10 @@
-const Category = require("../Models/Category"); 
-const Courses = require("../Models/Courses");
+const Category = require("../Models/Category");
 
 exports.createCategory = async (req, res) => {
   try {
     const { name, description } = req.body;
     // validate the data
-    if (!name || !description) {
+    if (!name) {
       return res.status(400).json({
         success: false,
         message: "All feilds are required",
@@ -19,6 +18,7 @@ exports.createCategory = async (req, res) => {
     return res.status(201).json({
       success: true,
       message: "Category is create in our DB",
+      categoryDetails
     });
   } catch (error) {
     console.log(error);

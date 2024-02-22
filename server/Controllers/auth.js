@@ -47,6 +47,7 @@ exports.sendOtp = async (req, res) => {
     res.status(201).json({
       success: true,
       message: "Otp send successfully",
+      OTP: otp,
     });
   } catch (error) {
     console.log(error);
@@ -65,19 +66,20 @@ exports.signUp = async (req, res) => {
       email,
       firstName,
       lastName,
-      phoneNumber,
+      phoneNumber = "",
       password,
       confirmPassword,
       accountType,
+      otp,
     } = req.body;
 
     if (
       !email ||
       !firstName ||
       !lastName ||
-      !phoneNumber ||
       !password ||
-      !confirmPassword
+      !confirmPassword ||
+      !otp
     ) {
       return res.status(401).json({
         success: false,
@@ -105,25 +107,20 @@ exports.signUp = async (req, res) => {
     const recentOtp = await OTP.find({ email })
       .sort({ createdAt: -1 })
       .limit(1);
-    console.log("recentOtp", recetOtp);
+    console.log("recentOtp", recentOtp);
     // Validate OTP.
     if (recentOtp.length === 0) {
       return res.status(403).json({
         success: false,
         message: "Otp Not Found",
       });
-    } else if (otp !== recentOtp) {
+    } else if (otp !== recentOtp[0].otp) {
+      console.log(recentOtp[0].otp);
       return res.status(403).json({
         success: false,
         message: "Otp Not Matched",
       });
     }
-
-    // return response succesfully
-    res.status(201).json({
-      success: true,
-      message: "Otp send successfully",
-    });
 
     // Hash  Password
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -139,11 +136,11 @@ exports.signUp = async (req, res) => {
       firstName,
       lastName,
       email,
-      contactNumber,
+      phoneNumber,
       password: hashedPassword,
       accountType,
-      additionalDetaisl: profileDetails._id,
-      Image: `https://api.dicebear.com/5.x/initials/svg?seed= ${firstname} ${lastName}`,
+      additionalDetails: profileDetails._id,
+      Image: `https://api.dicebear.com/5.x/initials/svg?seed= ${firstName} ${lastName}`,
     });
     return res.status(201).json({
       success: true,
@@ -171,7 +168,7 @@ exports.login = async (req, res) => {
       });
     }
     // check user exist
-    const user = await User.findOne({ eamil });
+    const user = await User.findOne({ email });
     if (!user) {
       return res.status(401).json({
         success: false,
@@ -179,15 +176,19 @@ exports.login = async (req, res) => {
       });
     }
     // Generate JWT  after password matching
-    if (await bcrypt.compare(password, user.password)) {
+    if (bcrypt.compare(password, user.password)) {
       const payload = {
         email: user.email,
         id: user._id,
         accountType: user.accountType,
       };
-      const token = jwt.sign(payload, process.env.JWT_SECRET, {
-        expiresIn: "2h",
-      });
+      const token = jwt.sign(
+        { email: user.email, id: user._id, accountType: user.accountType },
+        process.env.JWT_SECRET,
+        {
+          expiresIn: "24h",
+        }
+      );
       (user.token = token), (user.password = undefined);
 
       // Create cookies and send response
@@ -208,6 +209,7 @@ exports.login = async (req, res) => {
       });
     }
   } catch (error) {
+    console.log(error);
     return res.status(500).json({
       success: false,
       message: "Login Failure Please try after sometime",
@@ -219,14 +221,13 @@ exports.changePassword = async (req, res) => {
   try {
     const { email, oldPassword, currPasswrod, confirmPassword } = req.body;
 
-    // Text  box validations 
-    if(!oldPassword || !currPasswrod || !confirmPassword){
+    // Text  box validations
+    if (!oldPassword || !currPasswrod || !confirmPassword) {
       return res.status(401).json({
         status: 401,
-        message:"All feilds are required"
-      })
+        message: "All feilds are required",
+      });
     }
-
 
     // if curr  and confirm password is not matching
 
@@ -253,12 +254,12 @@ exports.changePassword = async (req, res) => {
     }
     return res.status(201).json({
       status: 201,
-      message:"Passwrod change successfully"
-    })
+      message: "Passwrod change successfully",
+    });
   } catch (error) {
     return res.status(501).json({
       status: 501,
-      message:"Something error occured during changing the password"
-    })
+      message: "Something error occured during changing the password",
+    });
   }
 };

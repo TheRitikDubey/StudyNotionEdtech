@@ -14,10 +14,6 @@ const courseSchema = new mongoose.Schema({
 		required: true,
 		ref: "User",
 	},
-  courseInstructor: {
-    type: mongoose.Schema.Types.ObjectId,
-    require: true,
-  },
   whatYouWillLearn: {
     type: String,
     required: true,
