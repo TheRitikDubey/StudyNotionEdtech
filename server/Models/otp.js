@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const mailSender = require("../utils/mailSender");
+const otpEmailTemplate = require("../mail/Templates/emailVerificationTemplate")
 
 const otpSchema = new mongoose.Schema({
   email: {
@@ -21,7 +22,7 @@ const sendVerificationEmail = async (email, otp) => {
     const mailResponse = await mailSender(
       email,
       "Verification Email from StudyNotion",
-      otp
+      otpEmailTemplate(otp)
     );
     console.log("MailResponse in OPT.js Middleware pre", mailResponse);
   } catch (error) {
