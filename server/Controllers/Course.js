@@ -2,10 +2,11 @@ const Course = require("../Models/Courses");
 const User = require("../Models/User");
 const Category = require("../Models/Category");
 const { uploadImageInCloudinary } = require("../utils/imageUploader");
+const Courses = require("../Models/Courses");
 
 exports.getAllCourse = async (req, res) => {
   try {
-    const allCourses = Course.find(
+    const allCourses = await Course.find(
       {},
       {
         courseName: true,
@@ -15,8 +16,14 @@ exports.getAllCourse = async (req, res) => {
         thumbnail: true,
       }
     )
-      .populate("instructorDetails")
+      .populate("instructor")
       .exec();
+    if(!allCourses){
+      return res.status(404).json({
+        success: false,
+        message:"All courses not found",
+      })
+    }
 
     return res.status(201).json({
       success: true,
@@ -24,9 +31,11 @@ exports.getAllCourse = async (req, res) => {
       data: allCourses,
     });
   } catch (error) {
+    console.log(error);
     return res.status(501).json({
       success: false,
       message: "Error while fetching the whole course",
+      error: error.message
     });
   }
 };
@@ -162,17 +171,17 @@ exports.getCourseDetails = async (req, res) => {
       .populate({
         path: "courseContent",
         populate: {
-          path: "SubSection",
+          path: "subSection",
         },
       })
-      .populate("RatingReview")
+      .populate("ratingReview")
       .populate({
         path: "instructor",
         populate: {
-          path: "additionDetails",
+          path: "additionalDetails",
         },
       })
-      .populate("Category");
+      .populate("category");
 
     if (!courseDetails) {
       return res.status(404).json({
@@ -190,6 +199,56 @@ exports.getCourseDetails = async (req, res) => {
     return res.status(501).json({
       success: false,
       message: "Error while fetching course details",
+      error: error.message
     });
   }
 };
+
+exports.updateCourse = async(req,res) => {
+  try {
+      const {courseId,courseName,courseDescription,price,tag,whatYouWillLearn,category} = req.body;
+      const thumbnailImage = req.files.thumbnailImage;
+
+      if(!courseId || !courseName || !courseDescription || !thumbnailImage || !price || !tag || !whatYouWillLearn || !category){
+        return res.status(401).json({
+          success: false,
+          message:"unable to get all the required field"
+        })
+      }
+      const isCourseAvailable = await Courses.findById(courseId);
+      if(!isCourseAvailable){
+        return res.status(404).json({
+          success: false,
+          message:"Course is not present in our system"
+        })
+      }
+
+      const uploadedImage = await uploadImageInCloudinary(
+        thumbnailImage,
+        process.env.FOLDER_NAME
+      );
+
+      const updateCourse = await Courses.findByIdAndUpdate({_id:courseId},{
+        courseName: courseName,
+        courseDescription: courseDescription,
+        whatYouWillLearn: whatYouWillLearn,
+        price: price,
+        thumbnail: uploadedImage.secure_url,
+        tag: tag,
+        category: category,
+      })
+
+      return res.status(200).json({
+        success: true,
+        message:"Course updated successfully",
+        updateCourse: updateCourse
+      })
+      
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message:"Error while updating the course",
+      error: error.message
+    })
+  }
+}

@@ -11,6 +11,7 @@ const {
   CreateCourse,
   getCourse,
   getCourseDetails,
+  updateCourse
 } = require("../Controllers/Course");
 const {
   createCategory,
@@ -58,6 +59,8 @@ router.post("/addSubSection", auth, IsInstructor, createSubSection)
 router.get("/getAllCourses", getAllCourse)
 // Get Details for a Specific Courses
 router.post("/getCourseDetails", getCourseDetails)
+// 
+router.post("/editCourse",auth,IsAdmin,IsInstructor,updateCourse)
 
 // ********************************************************************************************************
 //                                      Category routes (Only by Admin)

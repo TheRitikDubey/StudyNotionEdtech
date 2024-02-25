@@ -46,15 +46,15 @@ exports.createSection = async (req,res)=>{
 
 exports.updateSection = async (req,res)=>{
     try {
-        const {updatedSectionName,courseId} = req.body;
-        if(!updatedSectionName || !courseId){
-            return res.stats(401).json({
+        const {sectionName,sectionId} = req.body;
+        if(!sectionName || !sectionId){
+            return res.status(401).json({
                 success: false,
                 message:"Unable to get updated sectionName or courseId"
             })
         }
-        // create section in our DB
-        const updateSection = await Section.findByIdAndUpdate(courseId,{sectionName}, {new:true});
+        // update section in our DB
+        const updateSection = await Section.findByIdAndUpdate(sectionId,{sectionName}, {new:true});
         // Response
         return res.status(201).json({
             success: true,
@@ -65,7 +65,8 @@ exports.updateSection = async (req,res)=>{
     } catch (error) {
         return res.status(501).json({
             success: false,
-            message:"Error while updating the section of the course"
+            message:"Error while updating the section of the course",
+            error: error.message
         })
     }
 }
