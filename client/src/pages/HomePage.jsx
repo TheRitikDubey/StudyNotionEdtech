@@ -7,9 +7,10 @@ import bannerMp4 from "../assets/Images/banner.mp4";
 import CodeBlock from "../components/core/HomePage/CodeBlock";
 import ExploreCatalog from "../components/core/HomePage/ExploreCatalog";
 import "./Pages.css";
+import "../App.css"
 function HomePage() {
   return (
-    <div className="text-white mt-16 w-11/12">
+    <div className="text-white mt-16 mx-auto">
       {/* Section 1 */}
 
       <div className="flex flex-col relative mx-auto w-11/12 items-center max-w-maxContent  justify-between">
@@ -130,8 +131,15 @@ function HomePage() {
       </div>
 
        {/*Course Card section  */}
-      <div>
+      <div className="w-11/12 mx-auto mt-[6rem] relative">
           <ExploreCatalog/>
+      </div>
+
+      {/* Get the skills you need for a job */}
+      <div className=" bg-pure-greys-5 text-richblack-700">
+          <div className="homepage_bg w-full h-[310px]">
+
+          </div>
       </div>
     </div>
   );
