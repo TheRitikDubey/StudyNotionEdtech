@@ -6,8 +6,11 @@ import CLButton from "../components/core/HomePage/Button";
 import bannerMp4 from "../assets/Images/banner.mp4";
 import CodeBlock from "../components/core/HomePage/CodeBlock";
 import ExploreCatalog from "../components/core/HomePage/ExploreCatalog";
+import TimelineSection from "../components/core/HomePage/TimelineSection";
+import LearningLanguageSection from "../components/core/HomePage/LearninglanguageSection";
+import InstructorSection from "../components/core/HomePage/InstructorSection";
 import "./Pages.css";
-import "../App.css"
+import "../App.css";
 function HomePage() {
   return (
     <div className="text-white mt-16 mx-auto">
@@ -43,7 +46,7 @@ function HomePage() {
           </div>
         </div>
       </div>
-      
+
       {/* Section 2 video component */}
       <div className="w-[75%] mt-16 mx-auto">
         <div className="my-10 videoPlayer mx-6 shadow-blue-200  w-11/12">
@@ -52,7 +55,7 @@ function HomePage() {
           </video>
         </div>
       </div>
-      
+
       {/* Unlock your coding potential */}
       <div className="w-11/12 mx-auto">
         <CodeBlock
@@ -130,16 +133,65 @@ function HomePage() {
         />
       </div>
 
-       {/*Course Card section  */}
+      {/*Course Card section  */}
       <div className="w-11/12 mx-auto mt-[6rem] relative">
-          <ExploreCatalog/>
+        <ExploreCatalog />
       </div>
 
       {/* Get the skills you need for a job */}
       <div className=" bg-pure-greys-5 text-richblack-700">
-          <div className="homepage_bg w-full h-[310px]">
-
+        <div className="homepage_bg w-full h-[310px]">
+          <div className="flex pt-[10%] justify-center gap-8 mt-8">
+            <div>
+              <CLButton active={true} linkto={"/signup"}>
+                <div className="flex items-center gap-3">
+                  Explore Full Catalog
+                  <FaArrowRight />
+                </div>
+              </CLButton>
+            </div>
+            <div>
+              <CLButton active={false} linkto={"/login"}>
+                <div className="text-white">Learn more</div>
+              </CLButton>
+            </div>
           </div>
+        </div>
+        {/* Get skill & job demand section */}
+        <div className="mx-auto w-11/12 max-w-maxContent flex flex-col items-center justify-between gap-7">
+          <div className="flex mt-[6rem] items-baseline gap-4">
+            <div>
+              <div className="text-4xl font-semibold w-[75%]">
+                Get the Skills you need for a
+                <HighlightedText text={"Job that is in demand"} />
+              </div>
+            </div>
+            <div className="flex flex-col gap-10 w-[40%] items-start">
+              <div className="text-[16px]">
+                The modern StudyNotion is the dictates its own terms. Today, to
+                be a competitive specialist requires more than professional
+                skills.
+              </div>
+              <CLButton active={true} linkto={"/signup"}>
+                <div>Learn more</div>
+              </CLButton>
+            </div>
+          </div>
+        </div>
+        <div className="mx-auto w-11/12 max-w-maxContent flex flex-col items-center justify-between gap-7">
+          <TimelineSection />
+
+          <LearningLanguageSection />
+        </div>
+      </div>
+
+      <div className='w-11/12 mx-auto max-w-maxContent flex-col items-center justify-between gap-8 first-letter bg-richblack-900 text-white'>
+
+            <InstructorSection />
+
+            <h2 className='text-center text-4xl font-semobold mt-10'>review from Other Learners</h2>
+            {/* Review Slider here */}
+            
       </div>
     </div>
   );
