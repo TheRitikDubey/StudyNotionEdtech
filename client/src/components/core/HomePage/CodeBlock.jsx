@@ -13,8 +13,8 @@ function CodeBlock({
   codeColor,
 }) {
   return (
-    <div className={`flex justify-around ${position} my-20 mx-10 gap-10`}>
-      <div className="flex flex-col gap-4 max-w-[40%]">
+    <div className={`flex justify-around flex-col ${position} my-20 mx-10 gap-10`}>
+      <div className="flex flex-col gap-4 lg:max-w-[40%]">
         <div className="text-sm">{heading}</div>
         <div className="text-richblack-300">{subHeading}</div>
         <div className="mt-6 flex gap-8">

@@ -46,7 +46,7 @@ function ExploreCatalog() {
         })}
       </div>
       <div className="hidden lg:block lg:h-[18rem] "></div>
-      <div className="flex absolute mt-[18rem] flex-col lg:flex-row gap-12 lg:ml-11 w-11/12">
+      <div className="flex lg:absolute mt-[18rem] flex-col lg:flex-row gap-12 lg:ml-11 w-11/12">
         {courses.map((value, index) => {
           return (
                 <CourseCard cardData={value} currentCard={currentCard} setCurrentCard={setCurrentCard}  />
