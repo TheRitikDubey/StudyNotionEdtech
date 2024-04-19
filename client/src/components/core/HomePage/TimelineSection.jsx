@@ -41,7 +41,7 @@ const TimelineSection = () => {
                         <div className='flex flex-row gap-6' key={index}>
 
                             <div className='w-[50px] h-[50px] bg-white rounded-full flex justify-center items-center'>
-                                <img src={element.Logo} />
+                                <img src={element.Logo} alt='element-icon' />
                             </div>
 
                             <div>
