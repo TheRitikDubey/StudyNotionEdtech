@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const mailSender = require("../utils/mailSender");
 const otpEmailTemplate = require("../mail/Templates/emailVerificationTemplate")
 
+//Otp service for the BE 
 const otpSchema = new mongoose.Schema({
   email: {
     type: String,
