@@ -43,7 +43,7 @@ app.use("/api/v1/profile", profileRoutes);
 app.use("/api/v1/payment", paymentRoutes);
 app.use("/api/v1/course", courseRoutes);
 
-//def route
+//def route for testing in deployed versions
 app.get("/", (req, res) => {
   return res.json({
     success: true,
