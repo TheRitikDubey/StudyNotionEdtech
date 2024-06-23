@@ -1,16 +1,18 @@
 const RatingAndReview = require("../Models/RatingAndReview");
 const Courses = require("../Models/Courses");
 const { default: mongoose } = require("mongoose");
+const users = require("../Models/User")
 
 // create Rating&Review
 exports.createRating = async (req, res) => {
   try {
     const userId = req.user.id;
     const { courseId, rating, review } = req.body;
+    // console.log("body",req.body);
     // validate
-    if (!courseId || rating || review) {
-      return res.status(401).json({
-        sucess: false,
+    if (!courseId || !rating || !review) {
+      return res.status(404).json({
+        success: false,
         message: "All feild are not present",
       });
     }
@@ -58,6 +60,7 @@ exports.createRating = async (req, res) => {
       RatingAndReview,
     });
   } catch (error) {
+    console.log(error);
     return res.status(500).json({
       sucess: false,
       message: "Error while submiting the rating and review",
@@ -108,8 +111,9 @@ exports.getAllRatingAndReview = async (req, res) => {
   try {
     const allReview = await RatingAndReview.find({}).sort({rating: "desc"}).populate({
         path: "User",
-        select: "firstName lastName email i mages"
+        select: "firstName lastName email image"
     }).populate({
+      options: {strictPopulate: false},
         path: "Course",
         select:"courseName"
     }).exec();
@@ -121,6 +125,7 @@ exports.getAllRatingAndReview = async (req, res) => {
     })
 
   } catch (error) {
+    console.log(error);
     return res.status(500).json({
       sucess: false,
       message: "Error while getting all the rating and review",
