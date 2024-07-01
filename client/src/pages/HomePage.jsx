@@ -11,12 +11,15 @@ import LearningLanguageSection from "../components/core/HomePage/Learninglanguag
 import InstructorSection from "../components/core/HomePage/InstructorSection";
 import "./Pages.css";
 import "../App.css";
+import Footer from "../components/common/Footer";
+import { Navbar } from "../components/common/Navbar";
 function HomePage() {
   return (
-    <div className="text-white mt-16 mx-auto">
+    <div className="text-white mt-[1rem] mx-auto">
       {/* Section 1 */}
+      <Navbar/>
 
-      <div className="flex flex-col relative mx-auto w-11/12 items-center max-w-maxContent  justify-between">
+      <div className="flex mt-[4rem] flex-col relative mx-auto w-11/12 items-center max-w-maxContent  justify-between">
         <Link to={"/singup"}>
           <div className="rounded-full text-richblack-200 bg-richblack-800 font-base p-2 transition-all duration-200 hover:scale-95 w-fit">
             <button className="flex gap-2 px-10 py-[5px] items-center text-md">
@@ -189,10 +192,11 @@ function HomePage() {
 
             <InstructorSection />
 
-            <h2 className='text-center text-4xl font-semobold mt-10'>review from Other Learners</h2>
+            <h2 className='text-center text-4xl font-semobold mt-10'>Review From Other Learners</h2>
             {/* Review Slider here */}
             
       </div>
+      <Footer/>
     </div>
   );
 }
