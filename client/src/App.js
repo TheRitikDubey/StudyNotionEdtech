@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import { apiConnector } from "./services/apiConnector";
 import { categories } from "./services/apis";
-import LoginPage from "./pages/LoginPage";
+import LoginForm from "./components/core/Auth/LoginForm";
 function App() {
   const getCourse = (async() =>{
     try {
@@ -25,8 +25,8 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/signin" element={<LoginPage />} />
-          <Route path="/signup" element={<LoginPage />} />
+          <Route path="/login" element={<LoginForm />} />
+          {/* <Route path="/signup" element={<LoginPage />} /> */}
         </Routes>
       </BrowserRouter>
     </div>
