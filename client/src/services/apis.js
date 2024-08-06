@@ -1,5 +1,9 @@
-const BASE_URL = process.env.BE_URL
+const BASE_URL = process.env.REACT_APP_BASE_URL
 
 export const categories = {
-    CATEGORIES_API: `https://studynotionedtech-ewt7.onrender.com/api/v1/course/getAllCourses`
+    CATEGORIES_API: `${BASE_URL}/course/getAllCourses`
+}
+
+export const Auth = {
+    LOGIN_API: `${BASE_URL}/auth/login`
 }

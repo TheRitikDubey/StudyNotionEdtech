@@ -7,9 +7,10 @@ import { useSelector } from 'react-redux'
 import {AiOutlineShoppingCart} from "react-icons/ai"
 import { apiConnector } from '../../services/apiConnector'
 import { categories } from '../../services/apis'
+import { getRouteName } from '../../services/helperFunctions'
 import toast from 'react-hot-toast'
 
-export  const Navbar = () => {
+export  const Navbar = ({screen}) => {
   const subLinks = [
     {
         title: "python",
@@ -24,6 +25,7 @@ export  const Navbar = () => {
   const {user} = useSelector(state => state.auth)
   const {totalItems} = useSelector( (state) => state.cart )
   const location = useLocation();
+  console.log("S",screen);
   const fetchSublinks = async() => {
     // fetch sublinks
     try {
@@ -64,7 +66,7 @@ export  const Navbar = () => {
                     {
                         link.title === "Catalog" ? (
                             <div className='relative flex items-center gap-2 group'>
-                                <p>{link.title}</p>
+                                <p className="">{link.title}</p>
                                 <IoIosArrowDropdownCircle/>
 
                                 <div className='invisible absolute left-[50%]
@@ -128,7 +130,7 @@ export  const Navbar = () => {
                 )
             }
             {
-                token === null && (
+                token === null && screen !== "login" && (
                     <Link to="/login">
                         <button className='border border-richblack-700 bg-richblack-800 px-[12px] py-[8px] text-richblack-100 rounded-md'>
                             Log in
