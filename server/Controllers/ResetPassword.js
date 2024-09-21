@@ -4,7 +4,7 @@ const bcrypt = require("bcryptjs");
 exports.resetPasswordToken = async (req, res) => {
   try {
     // get mail from body
-    const email = req.body;
+    const {email} = req.body;
     // check mail validations
     if (!email) {
       return res.status(401).json({
@@ -46,6 +46,8 @@ exports.resetPasswordToken = async (req, res) => {
       MailSender: mailResponse,
     });
   } catch (error) {
+    console.log(error);
+    
     return res.status(401).json({
       status: 401,
       success: false,

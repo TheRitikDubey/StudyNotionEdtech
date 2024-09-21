@@ -6,6 +6,6 @@ export const categories = {
 
 export const Auth = {
     LOGIN_API: `${BASE_URL}/auth/login`,
-    RESETPASSTOKEN_API: `${BASE_URL}/reset-password-token`,
+    RESETPASSTOKEN_API: `http://localhost:9521/api/v1/auth/reset-password-token`,
     SENDOTP_API:`${BASE_URL}/sendotp`
 }

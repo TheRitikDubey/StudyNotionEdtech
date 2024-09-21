@@ -11,6 +11,7 @@ import LoginForm from "./components/core/Auth/LoginForm";
 import SignupForm from "./components/core/Auth/SignUpForm";
 import OpenRoute from "./components/core/Auth/OpenRoute";
 import ForgotPassword from "./pages/ForgetPassowrd";
+import Error from "./pages/Error";
 function App() {
   const getCourse = (async() =>{
     try {
@@ -111,7 +112,7 @@ function App() {
 
     
 
-    {/* <Route path="*" element={<Error />} /> */}
+    <Route path="*" element={<Error />} />
 
         </Routes>
         <Suspense/>
