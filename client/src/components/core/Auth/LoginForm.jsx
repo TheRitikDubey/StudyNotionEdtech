@@ -5,6 +5,9 @@ import { Link, useNavigate } from "react-router-dom";
 import { Navbar } from "../../common/Navbar";
 import loginImg from "../../../assets/Images/login.webp";
 import { login } from "../../../services/operations/authAPI";
+import { ACCOUNT_TYPE } from "../../../utils/constants"
+import Tab from "../../common/Tab"
+import { tabData } from "./SignUpForm";
 
 function LoginForm() {
   const navigate = useNavigate();
@@ -15,7 +18,8 @@ function LoginForm() {
   });
 
   const [showPassword, setShowPassword] = useState(false);
-  const [isStudent,setIsStudent] = useState(true);
+  // const [isStudent,setIsStudent] = useState(true);
+  const [accountType, setAccountType] = useState(ACCOUNT_TYPE.STUDENT)
 
   const { email, password } = formData;
 
@@ -43,10 +47,7 @@ function LoginForm() {
               <span className="text-blue-100 font-mono">Education to future-proof your career</span>{" "}
             </div>
           </div>
-          <div className="flex mt-6 justify-around items-baseline w-[15rem] p-1 pr-2 pl-2 bg-richblack-800 rounded-3xl">
-            <div className={`${isStudent === true && 'bg-richblack-900 rounded-2xl p-1 pr-4 pl-4'} cursor-pointer`} onClick={()=> setIsStudent(true)}>Student</div>
-            <div className={`${isStudent === false && 'bg-richblack-900 rounded-2xl p-1 pr-4 pl-4'} cursor-pointer`} onClick={()=> setIsStudent(false)}>Instructor</div>
-          </div>
+          <Tab tabData={tabData} field={accountType} setField={setAccountType} />
           <form
             onSubmit={handleOnSubmit}
             className="mt-6 flex w-[100%] flex-col gap-y-4"
