@@ -5,5 +5,7 @@ export const categories = {
 }
 
 export const Auth = {
-    LOGIN_API: `${BASE_URL}/auth/login`
+    LOGIN_API: `${BASE_URL}/auth/login`,
+    RESETPASSTOKEN_API: `${BASE_URL}/reset-password-token`,
+    SENDOTP_API:`${BASE_URL}/sendotp`
 }

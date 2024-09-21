@@ -22,6 +22,6 @@ const authSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { setToken, setLoading } = authSlice.actions
+export const { setToken, setLoading,setSignupData } = authSlice.actions
 
 export default authSlice.reducer
