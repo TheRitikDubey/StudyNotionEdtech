@@ -12,6 +12,7 @@ import SignupForm from "./components/core/Auth/SignUpForm";
 import OpenRoute from "./components/core/Auth/OpenRoute";
 import ForgotPassword from "./pages/ForgetPassowrd";
 import Error from "./pages/Error";
+import UpdatePassword from "./pages/UpdatePassword";
 function App() {
   const getCourse = (async() =>{
     try {
@@ -68,14 +69,14 @@ function App() {
           }
         />   */}
 
-    {/* <Route
+    <Route
           path="update-password/:id"
           element={
             <OpenRoute>
               <UpdatePassword />
             </OpenRoute>
           }
-        />   */}
+        />  
 
     {/* <Route
           path="about"
