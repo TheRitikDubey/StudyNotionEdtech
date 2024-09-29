@@ -37,12 +37,13 @@ function SignupForm() {
     email: "",
     password: "",
     confirmPassword: "",
+    phoneNumber: ""
   });
 
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  const { firstName, lastName, email, password, confirmPassword } = formData;
+  const { firstName, lastName, email, password, confirmPassword, phoneNumber } = formData;
 
   // Handle input fields, when some value changes
   const handleOnChange = (e) => {
@@ -78,6 +79,7 @@ function SignupForm() {
       email: "",
       password: "",
       confirmPassword: "",
+      phoneNumber: ""
     });
     setAccountType(ACCOUNT_TYPE.STUDENT);
   };
@@ -172,8 +174,8 @@ function SignupForm() {
               <input
                 required
                 type="number"
-                name="phone number"
-                value={email}
+                name="phoneNumber"
+                value={phoneNumber}
                 onChange={handleOnChange}
                 placeholder="123455678"
                 style={{

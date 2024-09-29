@@ -2,7 +2,7 @@ import "./App.css";
 import { BrowserRouter } from "react-router-dom";
 import { Route, Routes } from "react-router-dom";
 import HomePage from "./pages/HomePage";
-import { useSelector } from "react-redux";
+import VerifyEmail from "./pages/VerifyEmail";
 import { lazy, Suspense } from 'react';
 import { useEffect } from "react";
 import { apiConnector } from "./services/apiConnector";
@@ -60,14 +60,14 @@ function App() {
           }
         />  
 
-      {/* <Route
+      <Route
           path="verify-email"
           element={
             <OpenRoute>
               <VerifyEmail />
             </OpenRoute>
           }
-        />   */}
+        />  
 
     <Route
           path="update-password/:id"
