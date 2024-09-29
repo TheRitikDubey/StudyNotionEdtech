@@ -159,9 +159,9 @@ exports.signUp = async (req, res) => {
 // Login
 exports.login = async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { email, password, accountType } = req.body;
     // Validate data
-    if (!email || !password) {
+    if (!email || !password || !accountType) {
       return res.status(401).json({
         success: false,
         message: "All feilds are  required",
@@ -173,6 +173,12 @@ exports.login = async (req, res) => {
       return res.status(401).json({
         success: false,
         message: "User is not registered, Please signup first",
+      });
+    }
+    if (user.accountType!==accountType) {
+      return res.status(404).json({
+        success: false,
+        message: `User present but not as an ${accountType}`,
       });
     }
     // Generate JWT  after password matching

@@ -10,5 +10,6 @@ export const Auth = {
     RESETPASSTOKEN_API: `${BASE_URL}/auth/reset-password-token`,
     SENDOTP_API:`${BASE_URL}/auth/sendotp`,
     RESETPASSWORD_API: `${BASE_URL}/auth/reset-password`,
+    SIGNUP_API: `${BASE_URL}/auth/signup`
 
 }

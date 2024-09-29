@@ -50,6 +50,7 @@ export function signUp(
   password,
   confirmPassword,
   otp,
+  phoneNumber,
   navigate
 ) {
   return async (dispatch) => {
@@ -63,6 +64,7 @@ export function signUp(
         email,
         password,
         confirmPassword,
+        phoneNumber,
         otp,
       })
 
@@ -83,7 +85,7 @@ export function signUp(
   }
 }
 
-export function login(email, password, navigate) {
+export function login(email, password, accountType, navigate) {
   return async (dispatch) => {
     const toastId = toast.loading("Loading...")
     dispatch(setLoading(true))
@@ -91,6 +93,7 @@ export function login(email, password, navigate) {
       const response = await apiConnector("POST", LOGIN_API, {
         email,
         password,
+        accountType
       })
 
       console.log("LOGIN API RESPONSE............", response)
