@@ -11,6 +11,7 @@ import LoginForm from "./components/core/Auth/LoginForm";
 import SignupForm from "./components/core/Auth/SignUpForm";
 import OpenRoute from "./components/core/Auth/OpenRoute";
 import ForgotPassword from "./pages/ForgetPassowrd";
+import About from "./pages/About";
 import Error from "./pages/Error";
 import UpdatePassword from "./pages/UpdatePassword";
 function App() {
@@ -78,14 +79,14 @@ function App() {
           }
         />  
 
-    {/* <Route
+    <Route
           path="about"
           element={
             <OpenRoute>
               <About />
             </OpenRoute>
           }
-        /> */}
+        />
     {/* <Route path="/contact" element={<Contact />} />
 
     <Route 

@@ -9,6 +9,7 @@ import { apiConnector } from '../../services/apiConnector'
 import { categories } from '../../services/apis'
 import { getRouteName } from '../../services/helperFunctions'
 import toast from 'react-hot-toast'
+import ProfileDropdown from './ProfileDropDown'
 
 export  const Navbar = ({screen}) => {
   const subLinks = [
@@ -50,8 +51,8 @@ export  const Navbar = ({screen}) => {
   }
 
   return (
-    <div className='flex h-14 items-center justify-center border-b-[1px] border-b-richblack-700'>
-      <div className='flex w-11/12 max-w-maxContent items-center justify-between'>
+    <div className='flex h-16 items-center justify-center border-b-[1px] border-b-richblack-700'>
+      <div className='flex p-4 w-11/12 max-w-maxContent items-center justify-between'>
         {/* Image */}
       <Link to="/">
         <img src={logo} width={160} height={42} loading='lazy'/>
@@ -114,7 +115,7 @@ export  const Navbar = ({screen}) => {
 
         {/* Login/SignUp/Dashboard */}
         <div className='flex gap-x-4 items-center'>
-
+            
             {
                 user && user?.accountType != "Instructor" && (
                     <Link to="/dashboard/cart" className='relative'>
@@ -147,9 +148,9 @@ export  const Navbar = ({screen}) => {
                     </Link>
                 )
             }
-            {/* {
-                token !== null && <ProfileDropDown />
-            } */}
+             {
+              token !== null && <ProfileDropdown />
+            }
             
         </div>
 
