@@ -1,10 +1,8 @@
 import "./App.css";
-import { BrowserRouter } from "react-router-dom";
-import { Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import VerifyEmail from "./pages/VerifyEmail";
-import { lazy, Suspense } from 'react';
-import { useEffect } from "react";
+import { Suspense, useEffect } from 'react';
 import { apiConnector } from "./services/apiConnector";
 import { categories } from "./services/apis";
 import LoginForm from "./components/core/Auth/LoginForm";
@@ -14,6 +12,10 @@ import ForgotPassword from "./pages/ForgetPassowrd";
 import About from "./pages/About";
 import Error from "./pages/Error";
 import UpdatePassword from "./pages/UpdatePassword";
+import PrivateRoute from "./components/core/Auth/PrivateRoute";
+import Contact from "./pages/Contact";
+import Dashboard from "./pages/Dashboard";
+import MyProfile from "./components/core/dashboard/MyProfile";
 function App() {
   const getCourse = (async() =>{
     try {
@@ -86,7 +88,7 @@ function App() {
             </OpenRoute>
           }
         />
-    {/* <Route path="/contact" element={<Contact />} />
+     <Route path="/contact" element={<Contact />} />
 
     <Route 
       element={
@@ -96,20 +98,20 @@ function App() {
       }
     >
       <Route path="dashboard/my-profile" element={<MyProfile />} />
-      <Route path="dashboard/Settings" element={<Settings />} />
+      {/* <Route path="dashboard/Settings" element={<Settings />} /> */}
       
 
-      {
+      {/* {
         user?.accountType === ACCOUNT_TYPE.STUDENT && (
           <>
           <Route path="dashboard/cart" element={<Cart />} />
           <Route path="dashboard/enrolled-courses" element={<EnrolledCourses />} />
           </>
         )
-      }
+      } */}
 
 
-    </Route> */}
+    </Route>
 
     
 

@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 import { Link, matchPath, useLocation } from 'react-router-dom'
 import logo from '../../assets/Logo/Logo-Full-Light.png'
 import { NavbarLinks } from '../../data/navbar-links'
@@ -12,21 +12,26 @@ import toast from 'react-hot-toast'
 import ProfileDropdown from './ProfileDropDown'
 
 export  const Navbar = ({screen}) => {
-  const subLinks = [
-    {
-        title: "python",
-        link:"/catalog/python"
-    },
-    {
-        title: "web dev",
-        link:"/catalog/web-development"
-    },
-];
+//   const subLinks = [
+//     {
+//         title: "python",
+//         link:"/catalog/python"
+//     },
+//     {
+//         title: "web dev",
+//         link:"/catalog/web-development"
+//     },
+// ];
   const {token} = useSelector(state => state.auth)
   const {user} = useSelector(state => state.auth)
   const {totalItems} = useSelector( (state) => state.cart )
+  const [subLinks,setSubLinks] = useState([]);
   const location = useLocation();
-  console.log("S",screen);
+
+  useEffect(() => {
+    fetchSublinks()
+  }, [])
+
   const fetchSublinks = async() => {
     // fetch sublinks
     try {
@@ -38,14 +43,13 @@ export  const Navbar = ({screen}) => {
       };
       const response = await apiConnector("GET",categories.CATEGORIES_API,"",config)
       console.log("data",response.data);
+      setSubLinks(response.data.data)
     } catch (error) {
       toast.error("Error occured while fetching sublinks")
       console.log("ERROR___occur",error);
     }
   }
-  useEffect(() => {
-    fetchSublinks()
-  }, [])
+ 
   const matchRoute = (route)=>{
     return matchPath({path:route},location.pathname)
   }
@@ -70,7 +74,7 @@ export  const Navbar = ({screen}) => {
                                 <p className="">{link.title}</p>
                                 <IoIosArrowDropdownCircle/>
 
-                                <div className='invisible absolute left-[50%]
+                                <div className='invisible z-[100] absolute left-[50%]
                                     translate-x-[-50%] translate-y-[40%]
                                  top-[50%]
                                 flex flex-col rounded-md bg-richblack-5 p-4 text-richblack-900
@@ -86,7 +90,7 @@ export  const Navbar = ({screen}) => {
                                     subLinks.length ? (
                                             subLinks.map( (subLink, index) => (
                                                 <Link to={`${subLink.link}`} key={index}>
-                                                    <p>{subLink.title}</p>
+                                                    <p>{subLink.courseName}</p>
                                                 </Link>
                                             ) )
                                     ) : (<div></div>)
