@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form"
 import CountryCode from "../../data/countrycode.json"
 import { apiConnector } from "../../services/apiConnector"
 import { contactusEndpoint } from "../../services/apis"
+import './contact.css'
 
 const ContactUsForm = () => {
   const [loading, setLoading] = useState(false)
@@ -106,7 +107,7 @@ const ContactUsForm = () => {
           Phone Number
         </label>
 
-        <div className="flex gap-5">
+        <div className="flex gap-5 text-black">
           <div className="flex w-[81px] flex-col gap-2">
             <select
               type="text"
@@ -160,7 +161,7 @@ const ContactUsForm = () => {
           cols="30"
           rows="7"
           placeholder="Enter your message here"
-          className="form-style"
+          className="form-style  h-[10rem]"
           {...register("message", { required: true })}
         />
         {errors.message && (
