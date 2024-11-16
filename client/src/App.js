@@ -16,6 +16,7 @@ import PrivateRoute from "./components/core/Auth/PrivateRoute";
 import Contact from "./pages/Contact";
 import Dashboard from "./pages/Dashboard";
 import MyProfile from "./components/core/dashboard/MyProfile";
+import Settings from "./components/core/dashboard/Settings/index";
 function App() {
   const getCourse = (async() =>{
     try {
@@ -98,7 +99,7 @@ function App() {
       }
     >
       <Route path="dashboard/my-profile" element={<MyProfile />} />
-      {/* <Route path="dashboard/Settings" element={<Settings />} /> */}
+      <Route path="dashboard/Settings" element={<Settings />} />
       
 
       {/* {

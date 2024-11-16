@@ -8,7 +8,7 @@ exports.auth = async (req, res, next) => {
     const token =
       req.cookies.token ||
       req.body.token ||
-      req.header("Authorisation").replace("bearer ", "");
+      req.header("Authorization").replace("Bearer ", "");
     if (!token) {
       return res.status(401).json({
         status: 401,
@@ -17,9 +17,9 @@ exports.auth = async (req, res, next) => {
     }
     try {
       const decode = jwt.verify(token, process.env.JWT_SECRET);
-      console.log(decode);
       req.user = decode;
     } catch (err) {
+      console.log(err);
       return res.status(401).json({
         success: false,
         message: "Token verification  is failed",
@@ -27,9 +27,11 @@ exports.auth = async (req, res, next) => {
     }
     next();
   } catch (error) {
+    console.log(error);
+    
     return res.status(401).json({
       success: false,
-      message: "Something rror occured while validating token",
+      message: "Something error occured while validating token",
     });
   }
 };
