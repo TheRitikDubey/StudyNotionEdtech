@@ -1,16 +1,22 @@
 import "./App.css";
-import { BrowserRouter } from "react-router-dom";
-import { Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import HomePage from "./pages/HomePage";
-import { useSelector } from "react-redux";
-import { lazy, Suspense } from 'react';
-import { useEffect } from "react";
+import VerifyEmail from "./pages/VerifyEmail";
+import { Suspense, useEffect } from 'react';
 import { apiConnector } from "./services/apiConnector";
 import { categories } from "./services/apis";
 import LoginForm from "./components/core/Auth/LoginForm";
 import SignupForm from "./components/core/Auth/SignUpForm";
 import OpenRoute from "./components/core/Auth/OpenRoute";
 import ForgotPassword from "./pages/ForgetPassowrd";
+import About from "./pages/About";
+import Error from "./pages/Error";
+import UpdatePassword from "./pages/UpdatePassword";
+import PrivateRoute from "./components/core/Auth/PrivateRoute";
+import Contact from "./pages/Contact";
+import Dashboard from "./pages/Dashboard";
+import MyProfile from "./components/core/dashboard/MyProfile";
+import Settings from "./components/core/dashboard/Settings/index";
 function App() {
   const getCourse = (async() =>{
     try {
@@ -31,7 +37,6 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<LoginForm />} />
-          <Route path="/signup" element={<SignupForm />} />
       <Route
           path="/signup"
           element={
@@ -58,33 +63,33 @@ function App() {
           }
         />  
 
-      {/* <Route
+      <Route
           path="verify-email"
           element={
             <OpenRoute>
               <VerifyEmail />
             </OpenRoute>
           }
-        />   */}
+        />  
 
-    {/* <Route
+    <Route
           path="update-password/:id"
           element={
             <OpenRoute>
               <UpdatePassword />
             </OpenRoute>
           }
-        />   */}
+        />  
 
-    {/* <Route
+    <Route
           path="about"
           element={
             <OpenRoute>
               <About />
             </OpenRoute>
           }
-        /> */}
-    {/* <Route path="/contact" element={<Contact />} />
+        />
+     <Route path="/contact" element={<Contact />} />
 
     <Route 
       element={
@@ -97,21 +102,21 @@ function App() {
       <Route path="dashboard/Settings" element={<Settings />} />
       
 
-      {
+      {/* {
         user?.accountType === ACCOUNT_TYPE.STUDENT && (
           <>
           <Route path="dashboard/cart" element={<Cart />} />
           <Route path="dashboard/enrolled-courses" element={<EnrolledCourses />} />
           </>
         )
-      }
+      } */}
 
 
-    </Route> */}
+    </Route>
 
     
 
-    {/* <Route path="*" element={<Error />} /> */}
+    <Route path="*" element={<Error />} />
 
         </Routes>
         <Suspense/>

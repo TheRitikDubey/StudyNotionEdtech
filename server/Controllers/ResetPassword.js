@@ -4,7 +4,7 @@ const bcrypt = require("bcryptjs");
 exports.resetPasswordToken = async (req, res) => {
   try {
     // get mail from body
-    const email = req.body;
+    const {email} = req.body;
     // check mail validations
     if (!email) {
       return res.status(401).json({
@@ -26,7 +26,7 @@ exports.resetPasswordToken = async (req, res) => {
       { email: email },
       {
         token: token,
-        resetPasswordExpiry: 5 * 60 * 1000,
+        resetPasswordExpiry: Date.now() + 3600000,
       },
       { new: true }
     );
@@ -46,6 +46,7 @@ exports.resetPasswordToken = async (req, res) => {
       MailSender: mailResponse,
     });
   } catch (error) {
+    
     return res.status(401).json({
       status: 401,
       success: false,
@@ -60,7 +61,7 @@ exports.resetPassword = async (req, res) => {
     const { token, password, confirmPassword } = req.body;
 
     // check for valid input
-    if (!token || password || confirmPassword) {
+    if (!token || !password || !confirmPassword) {
       return res.status(401).json({
         success: false,
         message: "Requried all text feild",
@@ -82,7 +83,7 @@ exports.resetPassword = async (req, res) => {
       });
     }
     // check for the expiry for token as well
-    if (user.resetPasswordExpiry < Date.now()) {
+    if (user.resetPasswordExpiry > Date.now()) {
       return res.status(401).json({
         success: false,
         message: "Token expired!",
@@ -91,19 +92,25 @@ exports.resetPassword = async (req, res) => {
     // Hash password
     const newPassword = await bcrypt.hash(password, 10);
     // store in our DB respect to the token  which presetns in  DB
-    const updatePasswordResponse = user.findOneAndUpdate(
+    const updatePasswordResponse = User.findOneAndUpdate(
       { token: token },
       { password: newPassword },
       {new:true}
     );
     // send  response as successful
-    return res.status(200).json({
-      status: 201,
-      success: true,
-      message: "Password updated successfully",
-      MailSender: updatePasswordResponse,
-    });
+    // return res.status(200).json({
+    //   status: 201,
+    //   success: true,
+    //   message: "Password updated successfully",
+    //   MailSender: updatePasswordResponse,
+    // });
+    res.json({
+			success: true,
+			message: `Password Reset Successful`,
+		});
   } catch (error) {
+    console.log("error",error);
+    
     return res.status(401).json({
       success: false,
       message: "Can not send mail to your Mail ID",

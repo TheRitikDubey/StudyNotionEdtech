@@ -50,6 +50,7 @@ export function signUp(
   password,
   confirmPassword,
   otp,
+  phoneNumber,
   navigate
 ) {
   return async (dispatch) => {
@@ -63,6 +64,7 @@ export function signUp(
         email,
         password,
         confirmPassword,
+        phoneNumber,
         otp,
       })
 
@@ -83,7 +85,7 @@ export function signUp(
   }
 }
 
-export function login(email, password, navigate) {
+export function login(email, password, accountType, navigate) {
   return async (dispatch) => {
     const toastId = toast.loading("Loading...")
     dispatch(setLoading(true))
@@ -91,6 +93,7 @@ export function login(email, password, navigate) {
       const response = await apiConnector("POST", LOGIN_API, {
         email,
         password,
+        accountType
       })
 
       console.log("LOGIN API RESPONSE............", response)
@@ -105,7 +108,8 @@ export function login(email, password, navigate) {
         ? response.data.user.image
         : `https://api.dicebear.com/5.x/initials/svg?seed=${response.data.user.firstName} ${response.data.user.lastName}`
       dispatch(setUser({ ...response.data.user, image: userImage }))
-      
+      console.log("LOGING<<<",{ ...response.data.user, image: userImage });
+       
       localStorage.setItem("token", JSON.stringify(response.data.token))
       localStorage.setItem("user", JSON.stringify(response.data.user))
       navigate("/dashboard/my-profile")
@@ -126,7 +130,7 @@ export function logout(navigate) {
     localStorage.removeItem("token")
     localStorage.removeItem("user")
     toast.success("Logged Out")
-    navigate("/")
+    navigate("/login")
   }
 }
 
@@ -155,7 +159,7 @@ export function getPasswordResetToken(email , setEmailSent) {
   }
 }
 
-export function resetPassword(password, confirmPassword, token) {
+export function resetPassword(password, confirmPassword, token,navigate) {
   return async(dispatch) => {
     dispatch(setLoading(true));
     try{
@@ -169,6 +173,7 @@ export function resetPassword(password, confirmPassword, token) {
       }
 
       toast.success("Password has been reset successfully");
+      navigate('/login');
     }
     catch(error) {
       console.log("RESET PASSWORD TOKEN Error", error);
