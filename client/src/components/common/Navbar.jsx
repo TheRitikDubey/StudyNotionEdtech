@@ -42,7 +42,6 @@ export  const Navbar = ({screen}) => {
         }
       };
       const response = await apiConnector("GET",categories.CATEGORIES_API,"",config)
-      console.log("data",response.data);
       setSubLinks(response.data.data)
     } catch (error) {
       toast.error("Error occured while fetching sublinks")

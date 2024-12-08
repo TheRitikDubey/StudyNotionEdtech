@@ -21,7 +21,6 @@ function App() {
   const getCourse = (async() =>{
     try {
       const response = await apiConnector("GET",categories.CATEGORIES_API)
-      console.log("res",response);
     } catch (error) {
       console.error("ERROR___occur")
     }
