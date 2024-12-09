@@ -17,17 +17,23 @@ import Contact from "./pages/Contact";
 import Dashboard from "./pages/Dashboard";
 import MyProfile from "./components/core/dashboard/MyProfile";
 import Settings from "./components/core/dashboard/Settings/index";
+// import { fetchSublinks } from "./services/helperFunctions";
+// import { useSelector } from "react-redux";
 function App() {
-  const getCourse = (async() =>{
-    try {
-      const response = await apiConnector("GET",categories.CATEGORIES_API)
-    } catch (error) {
-      console.error("ERROR___occur")
-    }
-  })
-  useEffect(() => {
-    getCourse();
-  }, [])
+  //#NOTE: It's not required to fetch data from the API in the App component.
+  // const getCourse = (async() =>{
+  //   try {
+  //     const response = await apiConnector("GET",categories.CATEGORIES_API)
+  //   } catch (error) {
+  //     console.error("ERROR___occur")
+  //   }
+  // })
+  // const { allCourses } = useSelector( (state) => state.allCourses)
+  // useEffect(() => {
+  //   if(allCourses.length === 0){
+  //     fetchSublinks();
+  //   }
+  // }, [])
   
   return (
     <div className="flex flex-col font-inter min-h-screen w-screen  bg-richblack-900">
@@ -35,7 +41,6 @@ function App() {
       <Suspense fallback={<div className="container">Loading...</div>}></Suspense>
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/login" element={<LoginForm />} />
       <Route
           path="/signup"
           element={
@@ -45,7 +50,7 @@ function App() {
           }
         />
     <Route
-          path="login"
+          path="/login"
           element={
             <OpenRoute>
               <LoginForm />

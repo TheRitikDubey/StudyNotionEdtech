@@ -1,20 +1,20 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
-  allCourses: []
+  allCourses: [],
 }
 
 const allCourseSlice = createSlice({
   name: 'allCourses',
   initialState,
   reducers: {
-    setCourse(state,value){
-        state.value = value.payload
+    setAllCourses(state,value){
+        state.allCourses = value.payload
     }
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { setCourse } = allCourseSlice.actions
+export const { setAllCourses } = allCourseSlice.actions
 
 export default allCourseSlice.reducer

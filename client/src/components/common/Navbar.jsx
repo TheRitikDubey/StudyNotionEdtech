@@ -7,29 +7,26 @@ import { useSelector } from 'react-redux'
 import {AiOutlineShoppingCart} from "react-icons/ai"
 import { apiConnector } from '../../services/apiConnector'
 import { categories } from '../../services/apis'
-import { getRouteName } from '../../services/helperFunctions'
 import toast from 'react-hot-toast'
 import ProfileDropdown from './ProfileDropDown'
+import { useDispatch } from 'react-redux'
+import { setAllCourses } from '../../slices/allCourseSlice'
 
 export  const Navbar = ({screen}) => {
-//   const subLinks = [
-//     {
-//         title: "python",
-//         link:"/catalog/python"
-//     },
-//     {
-//         title: "web dev",
-//         link:"/catalog/web-development"
-//     },
-// ];
+
   const {token} = useSelector(state => state.auth)
   const {user} = useSelector(state => state.auth)
   const {totalItems} = useSelector( (state) => state.cart )
-  const [subLinks,setSubLinks] = useState([]);
+  const { allCourses } = useSelector( (state) => state.allCourses)
+  
+  const [subLinks,setSubLinks] = useState( allCourses || []);
   const location = useLocation();
+  const dispatch = useDispatch()
 
   useEffect(() => {
-    fetchSublinks()
+    if(allCourses.length === 0){
+      fetchSublinks()
+    }
   }, [])
 
   const fetchSublinks = async() => {
@@ -43,6 +40,7 @@ export  const Navbar = ({screen}) => {
       };
       const response = await apiConnector("GET",categories.CATEGORIES_API,"",config)
       setSubLinks(response.data.data)
+      dispatch(setAllCourses(response.data.data));
     } catch (error) {
       toast.error("Error occured while fetching sublinks")
       console.log("ERROR___occur",error);
@@ -58,7 +56,7 @@ export  const Navbar = ({screen}) => {
       <div className='flex p-4 w-11/12 max-w-maxContent items-center justify-between'>
         {/* Image */}
       <Link to="/">
-        <img src={logo} width={160} height={42} loading='lazy'/>
+        <img src={logo} alt='studynotion' width={160} height={42} loading='lazy'/>
       </Link>
 
       {/* Nav Links */}
