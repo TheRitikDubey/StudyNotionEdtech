@@ -9,6 +9,8 @@ import ExploreCatalog from "../components/core/HomePage/ExploreCatalog";
 import TimelineSection from "../components/core/HomePage/TimelineSection";
 import LearningLanguageSection from "../components/core/HomePage/LearninglanguageSection";
 import InstructorSection from "../components/core/HomePage/InstructorSection";
+import { InfiniteMovingCards } from "../components/common/InfiniteMovingCards";
+import { RatingAndReviewData } from "../data/ReviewRating";
 import "./Pages.css";
 import "../App.css";
 import Footer from "../components/common/Footer";
@@ -191,10 +193,15 @@ function HomePage() {
       <div className='w-11/12 mx-auto max-w-maxContent flex-col items-center justify-between gap-8 first-letter bg-richblack-900 text-white'>
 
             <InstructorSection />
-
-            <h2 className='text-center text-4xl font-semobold mt-10'>Review From Other Learners</h2>
-            {/* Review Slider here */}
             
+      </div>
+        <div className="mb-16">
+            <h2 className='text-center text-4xl font-semobold mt-10'>Review From Other Learners</h2>
+              {/* Review Slider here */}
+              <div className="w-[100%] flex justify-center mt-8">
+                <InfiniteMovingCards className={"max-w-[90rem] h-full"} items={RatingAndReviewData} />
+              <div/>
+        </div>
       </div>
       <Footer/>
     </div>

@@ -8,7 +8,12 @@
     "@mui/material": "^6.1.2",
     "@reduxjs/toolkit": "^2.2.3",
     "axios": "^1.6.8",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
     "concurrently": "^8.2.2",
+    "framer-motion": "^11.14.4",
+    "lucide-react": "^0.468.0",
+    "material-ui-rating": "^4.2.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.53.0",
@@ -19,6 +24,8 @@
     "react-router-dom": "^6.22.3",
     "react-scripts": "5.0.1",
     "react-type-animation": "^3.2.0",
+    "tailwind-merge": "^2.5.5",
+    "tailwindcss-animate": "^1.0.7",
     "web-vitals": "^2.1.4"
   },
   "repository": {
