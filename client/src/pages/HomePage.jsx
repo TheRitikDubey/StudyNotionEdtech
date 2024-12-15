@@ -196,7 +196,7 @@ function HomePage() {
             
       </div>
         <div className="mb-16">
-            <h2 className='text-center text-4xl font-semobold mt-10'>Review From Other Learners</h2>
+            <h2 className='text-center text-4xl font-bold mt-10'>Review From Other Learners</h2>
               {/* Review Slider here */}
               <div className="w-[100%] flex justify-center mt-8">
                 <InfiniteMovingCards className={"max-w-[90rem] h-full"} items={RatingAndReviewData} />
