@@ -22,7 +22,7 @@ export  const Navbar = ({screen}) => {
   const [subLinks,setSubLinks] = useState( allCourses || []);
   const location = useLocation();
   const dispatch = useDispatch()
-
+  
   useEffect(() => {
     if(allCourses.length === 0){
       fetchSublinks()

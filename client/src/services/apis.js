@@ -13,6 +13,14 @@ export const Auth = {
     SIGNUP_API: `${BASE_URL}/auth/signup`
 
 }
+
+export const profileEndpoints = {
+    GET_USER_DETAILS_API: BASE_URL + "/profile/getUserDetails",
+    GET_USER_ENROLLED_COURSES_API: LOCAL_URL + "/profile/getEnrolledCourse",
+    GET_INSTRUCTOR_DATA_API: BASE_URL + "/profile/instructorDashboard",
+}
+
+
 // CONTACT-US API
 export const contactusEndpoint = {
     CONTACT_US_API: BASE_URL + "/reach/contact",

@@ -1,5 +1,5 @@
 import "./App.css";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, useNavigate, Route, Routes } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import VerifyEmail from "./pages/VerifyEmail";
 import { Suspense, useEffect } from 'react';
@@ -17,22 +17,21 @@ import Contact from "./pages/Contact";
 import Dashboard from "./pages/Dashboard";
 import MyProfile from "./components/core/dashboard/MyProfile";
 import Settings from "./components/core/dashboard/Settings/index";
-// import { fetchSublinks } from "./services/helperFunctions";
-// import { useSelector } from "react-redux";
+import {getUserDetails} from "./services/operations/profileAPI";
+import { useSelector, useDispatch } from "react-redux";
+import { ACCOUNT_TYPE } from "./utils/constants";
+import EnrolledCourses from "./components/core/dashboard/EnrolledCourses";
 function App() {
-  //#NOTE: It's not required to fetch data from the API in the App component.
-  // const getCourse = (async() =>{
-  //   try {
-  //     const response = await apiConnector("GET",categories.CATEGORIES_API)
-  //   } catch (error) {
-  //     console.error("ERROR___occur")
-  //   }
-  // })
-  // const { allCourses } = useSelector( (state) => state.allCourses)
+  const dispatch = useDispatch()
+  // const navigate = useNavigate()
+  const { user } = useSelector((state) => state.profile)
+
   // useEffect(() => {
-  //   if(allCourses.length === 0){
-  //     fetchSublinks();
+  //   if (localStorage.getItem("token")) {
+  //     const token = JSON.parse(localStorage.getItem("token"))
+  //     dispatch(getUserDetails(token, navigate))
   //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
   // }, [])
   
   return (
@@ -88,9 +87,7 @@ function App() {
     <Route
           path="about"
           element={
-            <OpenRoute>
               <About />
-            </OpenRoute>
           }
         />
      <Route path="/contact" element={<Contact />} />
@@ -115,6 +112,17 @@ function App() {
         )
       } */}
 
+      {/* Route only for Students */}
+      {user?.accountType === ACCOUNT_TYPE.STUDENT && (
+            <>
+              <Route
+                path="dashboard/enrolled-courses"
+                element={<EnrolledCourses />}
+              />
+              {/* <Route path="/dashboard/cart" element={<Cart />} /> */}
+            </>
+          )}
+
 
     </Route>
 
@@ -123,7 +131,6 @@ function App() {
     <Route path="*" element={<Error />} />
 
         </Routes>
-        <Suspense/>
       </BrowserRouter>
     </div>
   );

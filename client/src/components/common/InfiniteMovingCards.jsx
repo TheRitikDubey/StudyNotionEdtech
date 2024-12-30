@@ -1,6 +1,8 @@
 "use client";
 import { cn } from "../../lib/utils";
 import React, { useEffect, useState } from "react";
+import ReactStars from "react-rating-stars-component";
+
 
 export const InfiniteMovingCards = ({
   items,
@@ -94,8 +96,21 @@ export const InfiniteMovingCards = ({
                 {item.review}
               </span>
               <div className="relative z-20 mt-6 flex flex-row items-center">
-                <div>
+                <div className="flex items-center gap-2">
                     {item.rating}
+                    <ReactStars
+                      count={5}
+                      size={24}
+                      value={item.rating}
+                      edit={false}
+                      activeColor="#ffd700"
+                      isHalf={true}
+                      emptyIcon={<i className="far fa-star"></i>}
+                      halfIcon={<i className="fa fa-star-half-alt"></i>}
+                      fullIcon={<i className="fa fa-star"></i>}
+                      classNames={"flex items-center gap-1"}
+                    />
+
                 </div>
               </div>
             </blockquote>
