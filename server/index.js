@@ -21,12 +21,30 @@ database.connect();
 //middlewares
 app.use(express.json());
 app.use(cookieParser());
+const allowedOrigins = [
+  "http://localhost:3000",  // Local development URL
+  "https://study-notion-edtech-fe.vercel.app", // Production frontend URL
+];
+
 app.use(
   cors({
-    origin: "http://localhost:3000",
-    credentials: true,
+    origin: (origin, callback) => {
+      // Allow requests with no origin (like mobile apps or curl)
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    credentials: true, // Allow cookies or credentials
   })
 );
+// app.use(
+//   cors({
+//     origin: "http://localhost:3000",
+//     credentials: true,
+//   })
+// );
 
 app.use(
   fileUpload({
