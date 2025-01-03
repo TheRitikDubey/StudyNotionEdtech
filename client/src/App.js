@@ -18,6 +18,7 @@ import Dashboard from "./pages/Dashboard";
 import MyProfile from "./components/core/dashboard/MyProfile";
 import Settings from "./components/core/dashboard/Settings/index";
 import {getUserDetails} from "./services/operations/profileAPI";
+import Cart from "./components/core/dashboard/Cart";
 import { useSelector, useDispatch } from "react-redux";
 import { ACCOUNT_TYPE } from "./utils/constants";
 import EnrolledCourses from "./components/core/dashboard/EnrolledCourses";
@@ -119,7 +120,7 @@ function App() {
                 path="dashboard/enrolled-courses"
                 element={<EnrolledCourses />}
               />
-              {/* <Route path="/dashboard/cart" element={<Cart />} /> */}
+              <Route path="/dashboard/cart" element={<Cart />} />
             </>
           )}
 

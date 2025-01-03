@@ -11,6 +11,7 @@ export default function EnrolledCourses() {
   const navigate = useNavigate()
 
   const [enrolledCourses, setEnrolledCourses] = useState(null)
+  
 
   useEffect(() => {
     ;(async () => {

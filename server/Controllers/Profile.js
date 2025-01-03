@@ -116,7 +116,13 @@ exports.getEnrolledCourse = async (req, res) => {
     }
 
     // check for user Details
-    const userDetails = await User.findOne({ userId }).populate("courses");
+    
+    const userDetails = await User.findOne({ _id: userId }).populate({
+      path: "courses",
+      model: "Course", // Ensure the model name matches your course schema
+    });
+    console.log("userDetails", userDetails);
+    
     if (!userDetails) {
       return res.status(400).json({
         success: false,
