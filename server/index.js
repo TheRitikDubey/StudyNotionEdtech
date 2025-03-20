@@ -23,6 +23,7 @@ app.use(express.json());
 app.use(cookieParser());
 const allowedOrigins = [
   "http://localhost:3000",  // Local development URL
+  "https://ritik-portfolio-psi.vercel.app/",
   "https://study-notion-edtech-fe.vercel.app", // Production frontend URL
 ];
 
