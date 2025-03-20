@@ -22,7 +22,7 @@ exports.auth = async (req, res, next) => {
       console.log(err);
       return res.status(401).json({
         success: false,
-        message: "Token verification  is failed",
+        message: "Token verification is failed",
       });
     }
     next();

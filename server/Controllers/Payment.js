@@ -57,7 +57,7 @@ exports.capturePayment = async (req, res) => {
       },
     };
     try {
-      //initiate the payment using razorpay
+      // initiate the payment using razorpay TO be uncommented
       const paymentResponse = await instance.orders.create(options);
       console.log(paymentResponse);
       //return response
@@ -72,7 +72,7 @@ exports.capturePayment = async (req, res) => {
       });
     } catch (error) {
       console.log(error);
-      res.json({
+      return res.status(500).json({
         success: false,
         message: "Could not initiate order",
       });

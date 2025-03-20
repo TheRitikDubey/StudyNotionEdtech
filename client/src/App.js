@@ -1,5 +1,5 @@
 import "./App.css";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, useNavigate, Route, Routes } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import VerifyEmail from "./pages/VerifyEmail";
 import { Suspense, useEffect } from 'react';
@@ -17,18 +17,23 @@ import Contact from "./pages/Contact";
 import Dashboard from "./pages/Dashboard";
 import MyProfile from "./components/core/dashboard/MyProfile";
 import Settings from "./components/core/dashboard/Settings/index";
+import {getUserDetails} from "./services/operations/profileAPI";
+import Cart from "./components/core/dashboard/Cart";
+import { useSelector, useDispatch } from "react-redux";
+import { ACCOUNT_TYPE } from "./utils/constants";
+import EnrolledCourses from "./components/core/dashboard/EnrolledCourses";
 function App() {
-  const getCourse = (async() =>{
-    try {
-      const response = await apiConnector("GET",categories.CATEGORIES_API)
-      console.log("res",response);
-    } catch (error) {
-      console.error("ERROR___occur")
-    }
-  })
-  useEffect(() => {
-    getCourse();
-  }, [])
+  const dispatch = useDispatch()
+  // const navigate = useNavigate()
+  const { user } = useSelector((state) => state.profile)
+
+  // useEffect(() => {
+  //   if (localStorage.getItem("token")) {
+  //     const token = JSON.parse(localStorage.getItem("token"))
+  //     dispatch(getUserDetails(token, navigate))
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [])
   
   return (
     <div className="flex flex-col font-inter min-h-screen w-screen  bg-richblack-900">
@@ -36,7 +41,6 @@ function App() {
       <Suspense fallback={<div className="container">Loading...</div>}></Suspense>
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/login" element={<LoginForm />} />
       <Route
           path="/signup"
           element={
@@ -46,7 +50,7 @@ function App() {
           }
         />
     <Route
-          path="login"
+          path="/login"
           element={
             <OpenRoute>
               <LoginForm />
@@ -84,9 +88,7 @@ function App() {
     <Route
           path="about"
           element={
-            <OpenRoute>
               <About />
-            </OpenRoute>
           }
         />
      <Route path="/contact" element={<Contact />} />
@@ -111,6 +113,17 @@ function App() {
         )
       } */}
 
+      {/* Route only for Students */}
+      {user?.accountType === ACCOUNT_TYPE.STUDENT && (
+            <>
+              <Route
+                path="dashboard/enrolled-courses"
+                element={<EnrolledCourses />}
+              />
+              <Route path="/dashboard/cart" element={<Cart />} />
+            </>
+          )}
+
 
     </Route>
 
@@ -119,7 +132,6 @@ function App() {
     <Route path="*" element={<Error />} />
 
         </Routes>
-        <Suspense/>
       </BrowserRouter>
     </div>
   );

@@ -14,7 +14,6 @@ export default function ProfileDropdown() {
 
   useOnClickOutside(ref, () => setOpen(false))
   if (!user) return null
-  console.log("USER HAI",user);
 
   
 

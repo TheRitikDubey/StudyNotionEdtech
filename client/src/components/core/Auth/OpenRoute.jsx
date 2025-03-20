@@ -4,9 +4,10 @@ import { Navigate } from "react-router-dom"
 
 function OpenRoute({ children }) {
   const { token } = useSelector((state) => state.auth)
+  // console.log("Token",token);
+  
 
-
-  if (token !== null) {
+  if (token === null) {
     return children
   } else {
     return <Navigate to="/" />

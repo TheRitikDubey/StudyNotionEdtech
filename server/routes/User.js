@@ -14,6 +14,8 @@ const {
   resetPasswordToken,
 } = require("../Controllers/ResetPassword");
 
+const { publicMailSender } = require("../Controllers/ContactUs")
+
 
 // Routes for Login, Signup, and Authentication
 
@@ -43,5 +45,9 @@ router.post("/reset-password-token", resetPasswordToken)
 // Route for resetting user's password after verification
 router.post("/reset-password", resetPassword)
 
+// ********************************************************************************************************
+//                                      Public Mail Service
+// ********************************************************************************************************
+router.post("/sendMail", publicMailSender)
 // Export the router for use in the main application
 module.exports = router

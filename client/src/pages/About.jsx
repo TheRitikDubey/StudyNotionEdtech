@@ -11,6 +11,8 @@ import Quote from "../components/core/AboutPage/Quote"
 import StatsComponenet from "../components/core/AboutPage/Stats"
 import HighlightedText from "../components/core/HomePage/HighlightedText"
 import { Navbar } from "../components/common/Navbar"
+import { InfiniteMovingCards } from "../components/common/InfiniteMovingCards"
+import { RatingAndReviewData } from "../data/ReviewRating"
 
 const About = () => {
   return (
@@ -109,12 +111,16 @@ const About = () => {
         <ContactFormSection />
       </section>
 
-      <div className="relative mx-auto my-20 flex w-11/12 max-w-maxContent flex-col items-center justify-between gap-8 bg-richblack-900 text-white">
-        {/* Reviws from Other Learner */}
-        <h1 className="text-center text-4xl font-semibold mt-8">
-          Reviews from other learners
-        </h1>
-        {/* <ReviewSlider /> */}
+          <div className="relative mx-auto my-20 w-full flex  flex-col items-center justify-between gap-8 bg-richblack-900 text-white">
+            {/* Reviws from Other Learner */}
+                <h1 className="text-center text-4xl font-semibold mt-8">
+                  Reviews from other learners
+                </h1>
+              {/* <ReviewSlider /> */}
+                <div className="w-[100%] flex justify-center mt-8">
+                      <InfiniteMovingCards className={"max-w-[90rem] h-full"} items={RatingAndReviewData} />
+                <div/>
+          </div>
       </div>
       <Footer />
     </div>

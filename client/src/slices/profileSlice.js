@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { setLoading } from './authSlice'
 
 const initialState = {
   user: localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : null,
@@ -20,6 +19,6 @@ const profileSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { setUser } = profileSlice.actions
+export const { setUser, setLoading } = profileSlice.actions
 
 export default profileSlice.reducer
