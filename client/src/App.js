@@ -21,6 +21,7 @@ import {getUserDetails} from "./services/operations/profileAPI";
 import Cart from "./components/core/dashboard/Cart";
 import { useSelector, useDispatch } from "react-redux";
 import { ACCOUNT_TYPE } from "./utils/constants";
+import MyCourses from "./components/core/dashboard/MyCourses";
 import EnrolledCourses from "./components/core/dashboard/EnrolledCourses";
 function App() {
   const dispatch = useDispatch()
@@ -112,6 +113,13 @@ function App() {
           </>
         )
       } */}
+      {
+        user?.accountType === ACCOUNT_TYPE.INSTRUCTOR && (
+          <>
+            <Route path="/dashboard/my-courses" element={<MyCourses/>} />
+          </>
+        )
+      }
 
       {/* Route only for Students */}
       {user?.accountType === ACCOUNT_TYPE.STUDENT && (
