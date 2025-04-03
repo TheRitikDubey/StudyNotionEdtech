@@ -23,6 +23,18 @@ import { useSelector, useDispatch } from "react-redux";
 import { ACCOUNT_TYPE } from "./utils/constants";
 import MyCourses from "./components/core/dashboard/MyCourses";
 import EnrolledCourses from "./components/core/dashboard/EnrolledCourses";
+// import Settings from "./components/core/dashboard/Settings"
+import VideoDetails from "./components/core/ViewCourse/VideoDetails"
+import EditCourse from "./components/core/dashboard/EditCourse"
+import Catalog from "./pages/Catalog"
+import CourseDetails from "./pages/CourseDetails"
+import Instructor from "./components/core/dashboard/Instructor";
+import AddCourse from "./components/core/dashboard/AddCourse"
+// Pages
+// import Home from "./pages/"
+// import Login from "./pages/Login"
+// import Signup from "./pages/Signup"
+import ViewCourse from "./pages/ViewCourse"
 function App() {
   const dispatch = useDispatch()
   // const navigate = useNavigate()
@@ -105,18 +117,25 @@ function App() {
       <Route path="dashboard/Settings" element={<Settings />} />
       
 
-      {/* {
+      {
         user?.accountType === ACCOUNT_TYPE.STUDENT && (
           <>
           <Route path="dashboard/cart" element={<Cart />} />
           <Route path="dashboard/enrolled-courses" element={<EnrolledCourses />} />
+          <Route path="/dashboard/cart" element={<Cart />} />
           </>
         )
-      } */}
+      }
       {
         user?.accountType === ACCOUNT_TYPE.INSTRUCTOR && (
           <>
             <Route path="/dashboard/my-courses" element={<MyCourses/>} />
+            <Route path="dashboard/instructor" element={<Instructor />} />
+              <Route path="dashboard/add-course" element={<AddCourse />} />
+              <Route
+                path="dashboard/edit-course/:courseId"
+                element={<EditCourse />}
+              />
           </>
         )
       }
@@ -131,9 +150,27 @@ function App() {
               <Route path="/dashboard/cart" element={<Cart />} />
             </>
           )}
-
-
     </Route>
+
+    {/* For the watching course lectures */}
+      <Route
+          element={
+            <PrivateRoute>
+              <ViewCourse />
+            </PrivateRoute>
+          }
+        >
+          {user?.accountType === ACCOUNT_TYPE.STUDENT && (
+            <>
+              <Route
+                path="view-course/:courseId/section/:sectionId/sub-section/:subSectionId"
+                element={<VideoDetails />}
+              />
+            </>
+          )}
+        </Route>
+
+    
 
     
 
