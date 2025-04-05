@@ -134,7 +134,7 @@ export  const Navbar = ({screen}) => {
             {
                 token === null && screen !== "login" && (
                     <Link to="/login">
-                        <button className='border border-richblack-700 bg-richblack-800 px-[12px] py-[8px] text-richblack-100 rounded-md'>
+                        <button className='border border-richblack-700 bg-richblack-800 px-[12px] py-[8px] text-richblack-100 rounded-md text-sm md:text-base'>
                             Log in
                         </button>
                     </Link>
@@ -143,7 +143,7 @@ export  const Navbar = ({screen}) => {
             {
                 token === null && screen !== "signup" && (
                     <Link to="/signup">
-                        <button  className='border border-richblack-700 bg-richblack-800 px-[12px] py-[8px] text-richblack-100 rounded-md'>
+                        <button  className='border border-richblack-700 bg-richblack-800 px-[12px] py-[8px] text-richblack-100 rounded-md text-sm md:text-base'>
                             Sign Up
                         </button>
                     </Link>

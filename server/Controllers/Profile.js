@@ -1,5 +1,6 @@
 const Profile = require("../Models/Profile");
 const User = require("../Models/User");
+const Course = require("../Models/Courses")
 const {uploadImageInCloudinary} = require("../utils/imageUploader")
 
 exports.updateProfile = async (req, res) => {
@@ -169,3 +170,31 @@ exports.updateDisplayPicture = async (req, res) => {
     })
   }
 };
+
+exports.instructorDashboard = async (req,res) => {
+  try {
+    const userId = req?.user?.id;
+    const courseDetails = await Course.findById({instructor: userId});
+    const courseData = courseDetails.map((course) => {
+      const totalStudentEnrolled = course.totalStudentEnrolled.length;
+      const totalEarningFromCourse = course.price * totalStudentEnrolled;
+      const courseDataWithStats = {
+        _id: course._id,
+        courseName: course.courseName,
+        courseDescription: course.courseDescription,
+        totalEarningFromCourse,
+        totalStudentEnrolled
+      }
+      return courseDataWithStats
+    })
+    return res.status(200).json({
+      success: true,
+      courses: courseData
+    })
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    })
+  }
+}
