@@ -16,7 +16,7 @@ export const Auth = {
 
 export const profileEndpoints = {
     GET_USER_DETAILS_API: BASE_URL + "/profile/getUserDetails",
-    GET_USER_ENROLLED_COURSES_API: LOCAL_URL + "/profile/getEnrolledCourses",
+    GET_USER_ENROLLED_COURSES_API: BASE_URL + "/profile/getEnrolledCourses",
     GET_INSTRUCTOR_DATA_API: BASE_URL + "/profile/instructorDashboard",
 }
 
@@ -50,7 +50,7 @@ export const courseEndpoints = {
     CREATE_SUBSECTION_API: BASE_URL + "/course/addSubSection",
     UPDATE_SECTION_API: BASE_URL + "/course/updateSection",
     UPDATE_SUBSECTION_API: BASE_URL + "/course/updateSubSection",
-    GET_ALL_INSTRUCTOR_COURSES_API: LOCAL_URL + "/course/getInstructorCourses",
+    GET_ALL_INSTRUCTOR_COURSES_API: BASE_URL + "/course/getInstructorCourses",
     DELETE_SECTION_API: BASE_URL + "/course/deleteSection",
     DELETE_SUBSECTION_API: BASE_URL + "/course/deleteSubSection",
     DELETE_COURSE_API: BASE_URL + "/course/deleteCourse",
