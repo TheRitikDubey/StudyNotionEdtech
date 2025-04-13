@@ -14,27 +14,28 @@ const {
 export function getUserDetails(token, navigate) {
   return async (dispatch) => {
     const toastId = toast.loading("Loading...")
-    dispatch(setLoading(true))
     try {
+      dispatch(setLoading(true))
       const response = await apiConnector("GET", GET_USER_DETAILS_API, null, {
         Authorization: `Bearer ${token}`,
       })
-      console.log("GET_USER_DETAILS API RESPONSE............", response)
+      console.log("GET_USER_DETAILS API RESPONSE............", response.data.success)
 
       if (!response.data.success) {
         throw new Error(response.data.message)
       }
-      const userImage = response.data.data.image
-        ? response.data.data.image
-        : `https://api.dicebear.com/5.x/initials/svg?seed=${response.data.data.firstName} ${response.data.data.lastName}`
-      dispatch(setUser({ ...response.data.data, image: userImage }))
+      const userImage = response.data.userData.Image
+        ? response.data.userData.Image
+        : `https://api.dicebear.com/5.x/initials/svg?seed=${response.data.userData.firstName} ${response.data.userData.lastName}`
+      dispatch(setUser({ ...response.data.userData, image: userImage }))
     } catch (error) {
       dispatch(logout(navigate))
       console.log("GET_USER_DETAILS API ERROR............", error)
       toast.error("Could Not Get User Details")
+    } finally {
+       toast.dismiss(toastId)
+       dispatch(setLoading(false))
     }
-    toast.dismiss(toastId)
-    dispatch(setLoading(false))
   }
 }
 
