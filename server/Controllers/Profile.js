@@ -12,7 +12,7 @@ exports.updateProfile = async (req, res) => {
     // validate
     if (!contactNumber || !gender || !_id) {
       return res.status(404).json({
-        sucess: false,
+        success: false,
         message:
           "Unable to get all required feilds in update Profile controler",
       });
@@ -32,14 +32,14 @@ exports.updateProfile = async (req, res) => {
 
     // return response
     return res.status(201).json({
-      sucess: true,
-      message: "Sucessfully updated or created the profile",
+      success: true,
+      message: "Successfully updated or created the profile",
       user: ProfileDetails,
     });
   } catch (error) {
     console.log(error);
     return res.status(401).json({
-      sucess: false,
+      success: false,
       message: "Unable to create or update the profile",
       error: error,
     });
@@ -55,7 +55,7 @@ exports.deleteProfile = async (req, res) => {
     // validate
     if (!userDetails) {
       return res.status(404).json({
-        sucess: false,
+        success: false,
         message: "Not a valid user",
       });
     }
@@ -70,13 +70,13 @@ exports.deleteProfile = async (req, res) => {
 
     // return response
     return res.status(201).json({
-      sucess: true,
-      message: "Sucessfully delted the profile",
+      success: true,
+      message: "Successfully delted the profile",
       user: deleteUser,
     });
   } catch (error) {
     return res.status(401).json({
-      sucess: false,
+      success: false,
       message: "Unable to delete the profile the profile",
     });
   }
@@ -91,14 +91,14 @@ exports.getUserDetailsData = async (req, res) => {
       .populate("additionalDetails")
       .exec();
     return res.status(201).json({
-      sucess: true,
-      message: "Sucessfully fetched the data",
+      success: true,
+      message: "Successfully fetched the data",
       userData: userDetails,
     });
   } catch (error) {
     console.log(error);
     return res.status(401).json({
-      sucess: false,
+      success: false,
       message: "Error while fetching the data",
     });
   }

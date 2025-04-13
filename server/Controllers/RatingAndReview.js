@@ -23,7 +23,7 @@ exports.createRating = async (req, res) => {
     });
     if (!courseDetails) {
       return res.status(404).json({
-        sucess: false,
+        success: false,
         message: "Students is not enrolled in the course",
       });
     }
@@ -34,7 +34,7 @@ exports.createRating = async (req, res) => {
     );
     if (isAlreadyPresent) {
       return res.status(403).json({
-        sucess: false,
+        success: false,
         message: "User already submit rating and review for this course",
       });
     }
@@ -55,14 +55,14 @@ exports.createRating = async (req, res) => {
       { new: true }
     );
     return res.status(200).json({
-      sucess: true,
-      message: "Rating and Review sucessfully submited",
+      success: true,
+      message: "Rating and Review successfully submited",
       RatingAndReview,
     });
   } catch (error) {
     console.log(error);
     return res.status(500).json({
-      sucess: false,
+      success: false,
       message: "Error while submiting the rating and review",
     });
   }
@@ -88,19 +88,19 @@ exports.getAverageRating = async (req, res) => {
     ]);
     if (getAverageRating.length > 0) {
       return res.status(200).json({
-        sucess: true,
+        success: true,
         message: `Average Rating is ${getAverageRating[0].averageRating}`,
         averageRating: getAverageRating[0].averageRating,
       });
     }
     return res.status(200).json({
-      sucess: true,
+      success: true,
       message: `Average Rating is 0`,
       averageRating: 0,
     });
   } catch (error) {
     return res.status(500).json({
-      sucess: false,
+      success: false,
       message: "Error while getting the average rating",
     });
   }
@@ -119,7 +119,7 @@ exports.getAllRatingAndReview = async (req, res) => {
     }).exec();
 
     return res.status(200).json({
-        sucess: true,
+        success: true,
         message:"Successfully fetched all the rating and review",
         allReview: allReview
     })
@@ -127,7 +127,7 @@ exports.getAllRatingAndReview = async (req, res) => {
   } catch (error) {
     console.log(error);
     return res.status(500).json({
-      sucess: false,
+      success: false,
       message: "Error while getting all the rating and review",
     });
   }
@@ -141,7 +141,7 @@ exports.getRatingAndReviewForCourse = async (req,res) => {
         // validate courseid
         if(!courseId){
             return res.status(404).json({
-                sucess: false,
+                success: false,
                 message:"Course id not found"
             })
         }
@@ -155,14 +155,14 @@ exports.getRatingAndReviewForCourse = async (req,res) => {
         }).exec();
         
         return res.status(200).json({
-            sucess: true,
+            success: true,
             message: "Successfully fetched all the rating and review for this course",
             rating: getRatingByCourseId,
         })
         
     } catch (error) {
         return res.status(500).json({
-            sucess: false,
+            success: false,
             message:"Error while getting the rating for this course"
         })
     }

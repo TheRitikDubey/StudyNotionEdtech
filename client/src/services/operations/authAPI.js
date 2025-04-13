@@ -87,38 +87,48 @@ export function signUp(
 
 export function login(email, password, accountType, navigate) {
   return async (dispatch) => {
-    const toastId = toast.loading("Loading...")
-    dispatch(setLoading(true))
+    const toastId = toast.loading('Logging in...')
     try {
-      const response = await apiConnector("POST", LOGIN_API, {
+      dispatch(setLoading(true))
+
+      const response = await apiConnector('POST', LOGIN_API, {
         email,
         password,
-        accountType
+        accountType,
       })
 
-      console.log("LOGIN API RESPONSE............", response)
+      console.log('LOGIN API RESPONSE:', response)
 
       if (!response.data.success) {
         throw new Error(response.data.message)
       }
-      toast.success("Login Successful")
-      dispatch(setToken(response.data.token))
-      const userImage = response.data?.user?.image
-        ? response.data.user.image
-        : `https://api.dicebear.com/5.x/initials/svg?seed=${response.data.user.firstName} ${response.data.user.lastName}`
-      dispatch(setUser({ ...response.data.user, image: userImage }))
-      console.log("LOGING<<<",{ ...response.data.user, image: userImage });
-       
-      localStorage.setItem("token", JSON.stringify(response.data.token))
-      localStorage.setItem("user", JSON.stringify(response.data.user))
-      navigate("/dashboard/my-profile")
-      dispatch(navigate("/dashboard/my-profile"))
+
+      const { token, user } = response.data
+
+      const userImage = user?.image
+        ? user.image
+        : `https://api.dicebear.com/5.x/initials/svg?seed=${user.firstName} ${user.lastName}`
+
+      const userData = { ...user, image: userImage }
+
+      // Set data in Redux
+      dispatch(setToken(token))
+      dispatch(setUser(userData))
+
+      // Set data in local storage
+      localStorage.setItem('token', JSON.stringify(token))
+      localStorage.setItem('user', JSON.stringify(userData))
+
+      // Success toast and navigate
+      toast.success('Login Successful')
+      navigate('/dashboard/my-profile')
     } catch (error) {
-      console.log("LOGIN API ERROR............", error)
-      toast.error("Login Failed")
+      console.error('LOGIN API ERROR:', error)
+      toast.error(error?.response?.data?.message || error.message || 'Login Failed')
+    } finally {
+      dispatch(setLoading(false))
+      toast.dismiss(toastId)
     }
-    dispatch(setLoading(false))
-    toast.dismiss(toastId)
   }
 }
 
