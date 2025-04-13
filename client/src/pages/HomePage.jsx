@@ -17,7 +17,7 @@ import Footer from "../components/common/Footer";
 import { Navbar } from "../components/common/Navbar";
 function HomePage() {
   return (
-    <div className="text-white mx-auto">
+    <div className="text-white mx-auto w-full">
       {/* Section 1 */}
       <Navbar/>
 
