@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { Navbar } from "../../common/Navbar";
 import loginImg from "../../../assets/Images/login.webp";
-import { login } from "../../../services/operations/authAPI";
+import { login, SignInWithGoogle } from "../../../services/operations/authAPI";
 import { ACCOUNT_TYPE } from "../../../utils/constants"
 import Tab from "../../common/Tab"
 import { tabData } from "./SignUpForm";
@@ -108,6 +108,8 @@ function LoginForm() {
               Sign In
             </button>
           </form>
+          <br />
+          <button onClick={SignInWithGoogle} className="mt-6 rounded-[8px] bg-white py-[8px] px-[12px] font-medium text-richblack-900">Sign in with google</button>
         </div>
         <div>
             <img src={loginImg} className="w-[30rem]" alt="LOGIN IMG" loading='lazy' />

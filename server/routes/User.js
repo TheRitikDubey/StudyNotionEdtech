@@ -7,6 +7,7 @@ const {
   login,
   changePassword,
   signUp,
+  verifyOAuthUser
 } = require("../Controllers/auth");
 
 const {
@@ -49,5 +50,6 @@ router.post("/reset-password", resetPassword)
 //                                      Public Mail Service
 // ********************************************************************************************************
 router.post("/sendMail", publicMailSender)
+router.get('/verify/user-profile', verifyOAuthUser)
 // Export the router for use in the main application
 module.exports = router

@@ -3,6 +3,7 @@ const OTP = require("../Models/Otp");
 const jwt = require("jsonwebtoken");
 const otpGenerator = require("otp-generator");
 const bcrypt = require("bcryptjs");
+const axios = require("axios")
 require("dotenv");
 const profile = require("../Models/Profile");
 // Send otp
@@ -269,3 +270,78 @@ exports.changePassword = async (req, res) => {
     });
   }
 };
+
+exports.RedirectsToGoogleOAuth = async (req,res) => {
+  const redirectUri = 'https://accounts.google.com/o/oauth2/v2/auth';
+    const params = new URLSearchParams({
+        client_id: process.env.GOOGLE_CLIENT_ID,
+        redirect_uri: process.env.GOOGLE_REDIRECT_URI,
+        response_type: 'code',
+        scope: 'openid email profile',
+        access_type: 'offline',
+        prompt: 'consent',  // Always ask for consent (optional)
+    });
+    res.redirect(`${redirectUri}?${params.toString()}`);
+}
+
+// Handle the OAuth callback
+exports.HandleAuthCallbackForGoogleOAuth = async (req,res) => {
+  const code = req.query.code;
+    if (!code) return res.status(400).send('No code found.');
+
+    try {
+        // Exchange code for tokens
+        const tokenResponse = await axios.post('https://oauth2.googleapis.com/token', {
+            code,
+            client_id: process.env.GOOGLE_CLIENT_ID,
+            client_secret: process.env.GOOGLE_CLIENT_SECRET,
+            redirect_uri: process.env.GOOGLE_REDIRECT_URI,
+            grant_type: 'authorization_code',
+        });
+        console.log("TR",tokenResponse);
+        
+        const { id_token, access_token } = tokenResponse?.data;
+
+        // Use id_token to get user info
+        const userInfoResponse = await axios.get(
+            `https://openidconnect.googleapis.com/v1/userinfo`,
+            { headers: { Authorization: `Bearer ${access_token}` } }
+        );
+        
+        const user = userInfoResponse?.data || userInfoResponse;
+        console.log(user);
+        
+        // You can now create a session, JWT, or anything you want
+        // return res.json({
+        //     message: 'User info fetched successfully!',
+        //     user,
+        //     id_token
+        // });
+        // Generate your own JWT
+        const appToken = jwt.sign(
+          { userId: user.sub, email: user.email },
+          'your_jwt_secret_key', // keep this safe
+          { expiresIn: '24h' }
+      );
+
+      // Redirect user back to React app with token
+      res.redirect(`http://localhost:3000/login/success?token=${appToken}`);
+
+    } catch (error) {
+        console.error('Error exchanging code for tokens:', error);
+        res.status(500).send('Authentication failed');
+    }
+}
+
+exports.verifyOAuthUser = (req,res) => {
+  const authHeader = req.headers.authorization;
+    if (!authHeader) return res.status(401).send('No token provided.');
+
+    const token = authHeader.split(' ')[1];
+    try {
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        res.json({ user: decoded }); // Send back user info
+    } catch (error) {
+        res.status(401).send('Invalid token.');
+    }
+}

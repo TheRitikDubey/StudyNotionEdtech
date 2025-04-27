@@ -12,6 +12,7 @@ const {
   LOGIN_API,
   RESETPASSTOKEN_API,
   RESETPASSWORD_API,
+  OAuthVerify
 } = Auth
 
 export function sendOtp(email, navigate) {
@@ -192,3 +193,46 @@ export function resetPassword(password, confirmPassword, token,navigate) {
     dispatch(setLoading(false));
   }
 }
+
+export function SignInWithGoogle() {
+    const val = window.location.href = 'http://localhost:9521/auth/google'; // Your backend URL
+    console.log(val);
+    
+}
+
+export function sigInWithOauth(token,navigate) {
+  return async(dispatch) => {
+    dispatch(setLoading(true));
+    try{
+      // Optional: Save token first
+      localStorage.setItem('token', JSON.stringify(token));
+      dispatch(setToken(token));
+
+      // Fetch user profile from backend (optional step)
+      const response = await apiConnector('GET', OAuthVerify, null, {
+        Authorization: `Bearer ${token}`,
+      });
+
+      const user = response.data.user; // Adjust based on your backend
+
+      const userImage = user?.image
+        ? user.image
+        : `https://api.dicebear.com/5.x/initials/svg?seed=${user.firstName} ${user.lastName}`;
+
+      const userData = { ...user, image: userImage };
+
+      // Save user data
+      localStorage.setItem('user', JSON.stringify(userData));
+      dispatch(setUser(userData));
+
+      toast.success('Login Successful!');
+      navigate('/dashboard/my-profile');
+    }
+    catch(error) {
+      console.log("Login Error", error);
+      toast.error("Unable to login with Google");
+    }
+    dispatch(setLoading(false));
+  }
+}
+

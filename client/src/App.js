@@ -30,6 +30,7 @@ import Catalog from "./pages/Catalog"
 import CourseDetails from "./pages/CourseDetails"
 import Instructor from "./components/core/dashboard/Instructor";
 import AddCourse from "./components/core/dashboard/AddCourse"
+import { sigInWithOauth } from "./services/operations/authAPI";
 // import Home from "./pages/"
 // import Login from "./pages/Login"
 // import Signup from "./pages/Signup"
@@ -44,6 +45,12 @@ function App() {
     if (localStorage.getItem("token")) {
       const token = JSON.parse(localStorage.getItem("token"))
       dispatch(getUserDetails(token, navigate))
+    }
+    else{
+      const params = new URLSearchParams(window.location.search);
+      const token = params.get('token');
+      
+      dispatch(sigInWithOauth(token,navigate))
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])

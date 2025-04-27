@@ -6,6 +6,7 @@ const userRoutes = require("./routes/User");
 const profileRoutes = require("./routes/Profile");
 const paymentRoutes = require("./routes/Payment");
 const courseRoutes = require("./routes/Course");
+const GoogleAuth = require("./routes/GoogleOAuth");
 
 const database = require("./config/database");
 const cookieParser = require("cookie-parser");
@@ -61,6 +62,7 @@ app.use("/api/v1/auth", userRoutes);
 app.use("/api/v1/profile", profileRoutes);
 app.use("/api/v1/payment", paymentRoutes);
 app.use("/api/v1/course", courseRoutes);
+app.use("/auth", GoogleAuth)
 
 //def route for testing in deployed versions
 app.get("/", (req, res) => {
