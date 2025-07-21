@@ -27,7 +27,7 @@ export function getUserDetails(token, navigate) {
       const userImage = response.data.userData.Image
         ? response.data.userData.Image
         : `https://api.dicebear.com/5.x/initials/svg?seed=${response.data.userData.firstName} ${response.data.userData.lastName}`
-      dispatch(setUser({ ...response.data.userData, image: userImage }))
+      dispatch(setUser({ ...response.data.userData, Image: userImage }))
     } catch (error) {
       dispatch(logout(navigate))
       console.log("GET_USER_DETAILS API ERROR............", error)

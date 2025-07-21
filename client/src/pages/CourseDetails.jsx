@@ -243,8 +243,8 @@ function CourseDetails() {
               <div className="flex items-center gap-4 py-4">
                 <img
                   src={
-                    instructor.image
-                      ? instructor.image
+                    instructor.Image
+                      ? instructor.Image
                       : `https://api.dicebear.com/5.x/initials/svg?seed=${instructor.firstName} ${instructor.lastName}`
                   }
                   alt="Author"

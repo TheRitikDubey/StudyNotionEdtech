@@ -105,11 +105,11 @@ export function login(email, password, accountType, navigate) {
 
       const { token, user } = response.data
 
-      const userImage = user?.image
-        ? user.image
+      const userImage = user?.Image
+        ? user.Image
         : `https://api.dicebear.com/5.x/initials/svg?seed=${user.firstName} ${user.lastName}`
 
-      const userData = { ...user, image: userImage }
+      const userData = { ...user, Image: userImage }
 
       // Set data in Redux
       dispatch(setToken(token))

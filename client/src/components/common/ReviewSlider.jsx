@@ -57,8 +57,8 @@ function ReviewSlider() {
                   <div className="flex items-center gap-4">
                     <img
                       src={
-                        review?.user?.image
-                          ? review?.user?.image
+                        review?.user?.Image
+                          ? review?.user?.Image
                           : `https://api.dicebear.com/5.x/initials/svg?seed=${review?.user?.firstName} ${review?.user?.lastName}`
                       }
                       alt=""
