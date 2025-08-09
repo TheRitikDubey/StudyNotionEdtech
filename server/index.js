@@ -23,10 +23,11 @@ app.use(express.json());
 app.use(cookieParser());
 const allowedOrigins = [
   "http://localhost:3000",  // Local development URL
-  "https://ritik-portfolio-psi.vercel.app/",
+  "http://localhost:8081", 
+  "https://ritik-portfolio-psi.vercel.app",
   "https://study-notion-edtech-fe.vercel.app", // Production frontend URL
 ];
-app.use(cors({ origin: '*' }));
+// app.use(cors({ origin: '*' }));
 app.use(
   cors({
     origin: (origin, callback) => {
@@ -40,12 +41,6 @@ app.use(
     credentials: true, // Allow cookies or credentials
   })
 );
-// app.use(
-//   cors({
-//     origin: "http://localhost:3000",
-//     credentials: true,
-//   })
-// );
 
 app.use(
   fileUpload({
