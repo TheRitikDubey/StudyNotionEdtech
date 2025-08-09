@@ -26,7 +26,7 @@ const allowedOrigins = [
   "https://ritik-portfolio-psi.vercel.app/",
   "https://study-notion-edtech-fe.vercel.app", // Production frontend URL
 ];
-
+app.use(cors({ origin: '*' }));
 app.use(
   cors({
     origin: (origin, callback) => {
