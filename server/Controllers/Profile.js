@@ -174,7 +174,8 @@ exports.updateDisplayPicture = async (req, res) => {
 exports.instructorDashboard = async (req,res) => {
   try {
     const userId = req?.user?.id;
-    const courseDetails = await Course.findById({instructor: userId});
+
+    const courseDetails = await Course.find({instructor: userId});
     const courseData = courseDetails.map((course) => {
       const totalStudentEnrolled = course.totalStudentEnrolled.length;
       const totalEarningFromCourse = course.price * totalStudentEnrolled;
@@ -192,6 +193,7 @@ exports.instructorDashboard = async (req,res) => {
       courses: courseData
     })
   } catch (error) {
+    console.log(error);
     return res.status(500).json({
       success: false,
       message: error.message,

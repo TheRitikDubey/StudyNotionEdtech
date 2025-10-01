@@ -5,6 +5,7 @@ import { Link } from "react-router-dom"
 import { fetchInstructorCourses } from "../../../services/operations/courseDetailsAPI"
 import { getInstructorData } from "../../../services/operations/profileAPI"
 import InstructorChart from "./InstructorDashboard/InstructorChart"
+import Button from "../HomePage/Button"
 
 export default function Instructor() {
   const { token } = useSelector((state) => state.auth)
@@ -126,12 +127,12 @@ export default function Instructor() {
           </div>
         </div>
       ) : (
-        <div className="mt-20 rounded-md bg-richblack-800 p-6 py-20">
+        <div className="mt-20 flex flex-col justify-center items-center rounded-md bg-richblack-800 p-6 py-20">
           <p className="text-center text-2xl font-bold text-richblack-5">
             You have not created any courses yet
           </p>
           <Link to="/dashboard/add-course">
-            <p className="mt-1 text-center text-lg font-semibold text-yellow-50">
+            <p className="mt-4 w-64 rounded-md text-[14px] px-4 py-2 lg:px-6 text-center text-lg bg-yellow-50 font-semibold text-black hover:scale-110 transition-all duration-200 ">
               Create a course
             </p>
           </Link>
