@@ -59,7 +59,7 @@ const ContactUsForm = () => {
             name="firstname"
             id="firstname"
             placeholder="Enter first name"
-            className="form-style"
+            className="contact-form-style"
             {...register("firstname", { required: true })}
           />
           {errors.firstname && (
@@ -77,7 +77,7 @@ const ContactUsForm = () => {
             name="lastname"
             id="lastname"
             placeholder="Enter last name"
-            className="form-style"
+            className="contact-form-style"
             {...register("lastname")}
           />
         </div>
@@ -92,7 +92,7 @@ const ContactUsForm = () => {
           name="email"
           id="email"
           placeholder="Enter email address"
-          className="form-style"
+          className="contact-form-style"
           {...register("email", { required: true })}
         />
         {errors.email && (
@@ -114,7 +114,7 @@ const ContactUsForm = () => {
               name="firstname"
               id="firstname"
               placeholder="Enter first name"
-              className="form-style"
+              className="contact-form-style"
               {...register("countrycode", { required: true })}
             >
               {CountryCode.map((ele, i) => {
@@ -132,7 +132,7 @@ const ContactUsForm = () => {
               name="phonenumber"
               id="phonenumber"
               placeholder="12345 67890"
-              className="form-style"
+              className="contact-form-style"
               {...register("phoneNo", {
                 required: {
                   value: true,
@@ -161,7 +161,7 @@ const ContactUsForm = () => {
           cols="30"
           rows="7"
           placeholder="Enter your message here"
-          className="form-style  h-[10rem]"
+          className="contact-form-style  h-[10rem]"
           {...register("message", { required: true })}
         />
         {errors.message && (

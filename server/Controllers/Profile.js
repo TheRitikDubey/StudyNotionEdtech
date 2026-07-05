@@ -152,7 +152,6 @@ exports.updateDisplayPicture = async (req, res) => {
       1000,
       1000
     )
-    console.log(image)
     const updatedProfile = await User.findByIdAndUpdate(
       { _id: userId },
       { Image: image.secure_url },
@@ -177,7 +176,9 @@ exports.instructorDashboard = async (req,res) => {
 
     const courseDetails = await Course.find({instructor: userId});
     const courseData = courseDetails.map((course) => {
-      const totalStudentEnrolled = course.totalStudentEnrolled.length;
+      console.log(course);
+      
+      const totalStudentEnrolled = course?.totalStudentEnrolled?.length;
       const totalEarningFromCourse = course.price * totalStudentEnrolled;
       const courseDataWithStats = {
         _id: course._id,

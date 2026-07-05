@@ -17,6 +17,7 @@ import Contact from "./pages/Contact";
 import Dashboard from "./pages/Dashboard";
 import MyProfile from "./components/core/dashboard/MyProfile";
 import Settings from "./components/core/dashboard/Settings/index";
+import ChangePassword from "./components/core/dashboard/Settings/ChangePassword";
 import {getUserDetails} from "./services/operations/profileAPI";
 import Cart from "./components/core/dashboard/Cart";
 import { useSelector, useDispatch } from "react-redux";
@@ -114,6 +115,10 @@ function App() {
       >
         <Route path="dashboard/my-profile" element={<MyProfile />} />
         <Route path="dashboard/Settings" element={<Settings />} />
+        <Route
+          path="dashboard/settings/change-password"
+          element={<ChangePassword />}
+        />
         
 
         {

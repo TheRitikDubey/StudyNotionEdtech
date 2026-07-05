@@ -63,7 +63,7 @@ export default function EditProfile() {
                 type="text"
                 name="lastName"
                 id="lastName"
-                placeholder="Enter first name"
+                placeholder="Enter last name"
                 className="form-style"
                 {...register("lastName", { required: true })}
                 defaultValue={user?.lastName}
@@ -109,16 +109,22 @@ export default function EditProfile() {
                 Gender
               </label>
               <select
-                type="text"
                 name="gender"
                 id="gender"
-                className="form-style"
+                className="form-style cursor-pointer"
                 {...register("gender", { required: true })}
-                defaultValue={user?.additionalDetails?.gender}
+                defaultValue={user?.additionalDetails?.gender || ""}
               >
+                <option value="" disabled className="bg-richblack-800 text-richblack-400">
+                  Select your gender
+                </option>
                 {genders.map((ele, i) => {
                   return (
-                    <option key={i} value={ele}>
+                    <option
+                      key={i}
+                      value={ele}
+                      className="bg-richblack-800 text-richblack-5"
+                    >
                       {ele}
                     </option>
                   )
@@ -126,7 +132,7 @@ export default function EditProfile() {
               </select>
               {errors.gender && (
                 <span className="-mt-1 text-[12px] text-yellow-100">
-                  Please enter your Date of Birth.
+                  Please select your gender.
                 </span>
               )}
             </div>
